@@ -2,6 +2,10 @@ node_modules
 
 /.cache
 /build
-.env
+.dev.vars
 
 .wrangler
+
+## Panda
+styled-system
+styled-system-studio

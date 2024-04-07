@@ -1,4 +1,5 @@
 import type { MetaFunction } from "@remix-run/cloudflare";
+import { Header } from "~/components/header";
 
 export const meta: MetaFunction = () => {
   return [
@@ -13,6 +14,7 @@ export const meta: MetaFunction = () => {
 export default function Index() {
   return (
     <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }}>
+      <Header />
       <h1>Welcome to Remix (with Vite and Cloudflare)</h1>
       <ul>
         <li>
