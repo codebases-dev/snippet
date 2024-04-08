@@ -26,7 +26,7 @@ export function Header() {
             fontWeight: "extrabold",
           })}
         >
-          Codebases
+          Snippets
         </a>
       </div>
       <div

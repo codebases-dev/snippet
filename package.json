@@ -19,7 +19,9 @@
     "@remix-run/cloudflare-pages": "^2.8.1",
     "@remix-run/css-bundle": "^2.8.1",
     "@remix-run/react": "^2.8.1",
+    "highlight.js": "^11.9.0",
     "isbot": "^4.1.0",
+    "lucide-react": "^0.365.0",
     "miniflare": "^3.20231030.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
