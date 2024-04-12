@@ -1,5 +1,5 @@
 {
-  "name": "snippets",
+  "name": "@codebases/snippet",
   "private": true,
   "sideEffects": false,
   "type": "module",

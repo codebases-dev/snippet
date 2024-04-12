@@ -26,7 +26,14 @@ export function Header() {
             fontWeight: "extrabold",
           })}
         >
-          Snippets
+          Codebases{" "}
+          <span
+            className={css({
+              color: "sky.500",
+            })}
+          >
+            Snippet
+          </span>
         </a>
       </div>
       <div

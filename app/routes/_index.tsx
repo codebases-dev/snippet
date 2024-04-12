@@ -10,11 +10,10 @@ import { Container } from "~/components/container";
 
 export const meta: MetaFunction = () => {
   return [
-    { title: "Codebases Snippets" },
+    { title: "Codebases Snippet" },
     {
       name: "description",
-      content:
-        "Welcome to Codebases Snippets! Here you can find code snippets.",
+      content: "Welcome to Codebases Snippet! Here you can find code snippets.",
     },
   ];
 };
