@@ -1,6 +1,6 @@
 import { css, cx } from "styled-system/css";
 import "highlight.js/styles/github-dark.css";
-import { ThumbsUpIcon } from "lucide-react";
+import { EyeIcon, HeartIcon, MessageCircleMoreIcon } from "lucide-react";
 import { Post } from "~/models/post.server";
 
 interface CardProps {
@@ -28,74 +28,55 @@ export function Card({ post }: CardProps) {
         className={css({
           display: "flex",
           alignItems: "center",
-          justifyContent: "space-between",
+          gap: "0.25rem",
+          width: "100%",
         })}
       >
+        {post.user.imageUrl && (
+          <img
+            src={post.user.imageUrl}
+            alt=""
+            className={css({
+              width: "2.25rem",
+              height: "2.25rem",
+              borderRadius: "full",
+              border: "1px solid",
+              borderColor: "gray.200",
+            })}
+          />
+        )}
         <div
           className={css({
             display: "flex",
-            alignItems: "center",
+            flexDirection: "column",
             gap: "0.25rem",
+            lineHeight: 1,
+            overflow: "hidden",
           })}
         >
-          {post.user.imageUrl && (
-            <img
-              src={post.user.imageUrl}
-              alt=""
-              className={css({
-                width: "2.25rem",
-                height: "2.25rem",
-                borderRadius: "full",
-                border: "1px solid",
-                borderColor: "gray.200",
-              })}
-            />
-          )}
           <div
             className={css({
-              display: "flex",
-              flexDirection: "column",
-              gap: "0.25rem",
-              lineHeight: 1,
+              fontSize: "sm",
+              fontWeight: "semibold",
+              color: "gray.800",
               overflow: "hidden",
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap",
             })}
           >
-            <div
-              className={css({
-                fontSize: "sm",
-                fontWeight: "semibold",
-                color: "gray.800",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                whiteSpace: "nowrap",
-              })}
-            >
-              {post.user.displayName}
-            </div>
-            <div
-              className={css({
-                fontSize: "xs",
-                color: "gray.600",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                whiteSpace: "nowrap",
-              })}
-            >
-              @{post.user.username}
-            </div>
+            {post.user.displayName}
           </div>
-        </div>
-        <div
-          className={css({
-            display: "flex",
-            alignItems: "center",
-            gap: "0.25rem",
-            fontSize: "xs",
-            color: "gray.600",
-          })}
-        >
-          <ThumbsUpIcon size={18} />
-          <div>{post.likeCount}</div>
+          <div
+            className={css({
+              fontSize: "xs",
+              color: "gray.600",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap",
+            })}
+          >
+            @{post.user.username}
+          </div>
         </div>
       </div>
       <h2
@@ -124,6 +105,53 @@ export function Card({ post }: CardProps) {
           dangerouslySetInnerHTML={{ __html: post.codeHtml }}
         />
       </pre>
+      <div
+        className={css({
+          display: "flex",
+          alignItems: "center",
+          color: "gray.600",
+          gap: "1rem",
+          fontSize: "0.7125rem",
+        })}
+      >
+        <div
+          className={css({
+            display: "flex",
+            alignItems: "center",
+            gap: "0.125rem",
+          })}
+        >
+          <EyeIcon size={16} strokeWidth={1.25} />
+          <div>{post.viewCount}</div>
+        </div>
+        <div
+          className={css({
+            display: "flex",
+            alignItems: "center",
+            gap: "0.125rem",
+          })}
+        >
+          <HeartIcon size={16} strokeWidth={1.25} />
+          <div>{post.likeCount}</div>
+        </div>
+        <div
+          className={css({
+            display: "flex",
+            alignItems: "center",
+            gap: "0.125rem",
+          })}
+        >
+          <MessageCircleMoreIcon size={16} strokeWidth={1.25} />
+          <div>{post.commentCount}</div>
+        </div>
+        <div
+          className={css({
+            marginLeft: "auto",
+          })}
+        >
+          {post.postedAt}
+        </div>
+      </div>
     </div>
   );
 }

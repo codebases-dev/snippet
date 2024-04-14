@@ -8,5 +8,5 @@ function calculateCodeLineCount(code: string) {
 
 export function calculateCardHeight(post: Post) {
   const codeLineCount = calculateCodeLineCount(post.code);
-  return codeLineCount * 1.5 + 9.5;
+  return codeLineCount * 1.5 + 11.5;
 }

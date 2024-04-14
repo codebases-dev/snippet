@@ -1,6 +1,6 @@
 import { json, type MetaFunction } from "@remix-run/cloudflare";
 import { useLoaderData } from "@remix-run/react";
-import { css, cx } from "styled-system/css";
+import { css } from "styled-system/css";
 import { Header } from "~/components/header";
 import { getPosts, Post } from "~/models/post.server";
 import hljs from "highlight.js";
@@ -18,12 +18,19 @@ export const meta: MetaFunction = () => {
   ];
 };
 
-function generateGridStyleHtml(posts: Post[]) {
+function generateCardStyleHtml(posts: Post[]) {
   return `
     <style>
       .card-list {
+        display: grid;
         grid-template-areas: ${generateGridTemplateAreas(posts, 4)};
         grid-template-columns: repeat(4, 28rem);
+      }
+      
+      .card-list > li {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+        padding-bottom: 1rem;
       }
       
       @media (max-width: calc(28rem * 4 + 1rem)) {
@@ -42,8 +49,15 @@ function generateGridStyleHtml(posts: Post[]) {
       
       @media (max-width: calc(28rem * 2 + 1rem)) {
         .card-list {
+          display: block;
+          width: 100%;
           grid-template-areas: ${generateGridTemplateAreas(posts, 1)};
           grid-template-columns: 1fr;
+        }
+        
+        .card-list > li {
+          padding-left: 0;
+          padding-right: 0;
         }
       }
     </style>
@@ -59,18 +73,18 @@ export async function loader() {
 
   return json({
     posts: transformedPosts,
-    gridStyleHtml: generateGridStyleHtml(transformedPosts),
+    cardStyleHtml: generateCardStyleHtml(transformedPosts),
   });
 }
 
 export default function Index() {
-  const { posts, gridStyleHtml } = useLoaderData<typeof loader>();
+  const { posts, cardStyleHtml } = useLoaderData<typeof loader>();
 
   return (
     <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }}>
       <Header />
       <Container>
-        <div dangerouslySetInnerHTML={{ __html: gridStyleHtml }} />
+        <div dangerouslySetInnerHTML={{ __html: cardStyleHtml }} />
         <div
           className={css({
             display: "flex",
@@ -81,21 +95,10 @@ export default function Index() {
             gap: "1rem",
           })}
         >
-          <ul
-            className={cx(
-              "card-list",
-              css({
-                display: "grid",
-              })
-            )}
-          >
+          <ul className="card-list">
             {posts.map((post) => (
               <li
                 key={post.id}
-                className={css({
-                  paddingX: "0.5rem",
-                  paddingBottom: "1rem",
-                })}
                 style={{
                   gridArea: `item${post.id}`,
                 }}

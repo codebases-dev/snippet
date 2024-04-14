@@ -3,7 +3,10 @@ export interface Post {
   code: string;
   codeHtml?: string;
   language: string;
+  viewCount: number;
   likeCount: number;
+  commentCount: number;
+  postedAt: string;
   user: {
     id: string;
     username: string;
@@ -17,7 +20,10 @@ const mockPosts: Post[] = [
     id: "1",
     code: `console.log("Hello, World!");`,
     language: "javascript",
-    likeCount: 123,
+    viewCount: 123,
+    likeCount: 12,
+    commentCount: 1,
+    postedAt: "Jan 1, 2024",
     user: {
       id: "1",
       username: "Alice",
@@ -35,7 +41,10 @@ for (let number of numbers) {
 console.log(sum);
 `,
     language: "javascript",
-    likeCount: 456,
+    viewCount: 456,
+    likeCount: 34,
+    commentCount: 2,
+    postedAt: "Jan 2, 2024",
     user: {
       id: "2",
       username: "Bob",
@@ -51,7 +60,10 @@ console.log(sum);
 greet("Alice");
 `,
     language: "javascript",
-    likeCount: 789,
+    viewCount: 789,
+    likeCount: 56,
+    commentCount: 3,
+    postedAt: "Jan 3, 2024",
     user: {
       id: "3",
       username: "Charlie",
@@ -68,7 +80,10 @@ greet("Alice");
 console.log(person.name + " is " + person.age + " years old.");
 `,
     language: "javascript",
-    likeCount: 101,
+    viewCount: 101,
+    likeCount: 78,
+    commentCount: 4,
+    postedAt: "Jan 4, 2024",
     user: {
       id: "4",
       username: "Dave",
@@ -86,7 +101,10 @@ if (score >= 70) {
 }
 `,
     language: "javascript",
-    likeCount: 202,
+    viewCount: 202,
+    likeCount: 90,
+    commentCount: 5,
+    postedAt: "Jan 5, 2024",
     user: {
       id: "5",
       username: "Eve",
@@ -101,7 +119,10 @@ let doubledNumbers = numbers.map(number => number * 2);
 console.log(doubledNumbers);
 `,
     language: "javascript",
-    likeCount: 303,
+    viewCount: 303,
+    likeCount: 123,
+    commentCount: 6,
+    postedAt: "Jan 6, 2024",
     user: {
       id: "6",
       username: "Frank",
@@ -120,7 +141,10 @@ let youngPeople = people.filter(person => person.age < 30);
 console.log(youngPeople);
 `,
     language: "javascript",
-    likeCount: 404,
+    viewCount: 404,
+    likeCount: 234,
+    commentCount: 7,
+    postedAt: "Jan 7, 2024",
     user: {
       id: "7",
       username: "Grace",
@@ -135,7 +159,10 @@ let greeting = \`Hello, \${name}! How are you?\`;
 console.log(greeting);
 `,
     language: "javascript",
-    likeCount: 505,
+    viewCount: 505,
+    likeCount: 345,
+    commentCount: 8,
+    postedAt: "Jan 8, 2024",
     user: {
       id: "8",
       username: "Helen",
@@ -155,7 +182,10 @@ console.log(greeting);
 asyncFunction().then(console.log);
 `,
     language: "javascript",
-    likeCount: 606,
+    viewCount: 606,
+    likeCount: 456,
+    commentCount: 9,
+    postedAt: "Jan 9, 2024",
     user: {
       id: "9",
       username: "Ivy",
@@ -178,7 +208,10 @@ const alice = new Person("Alice", 25);
 alice.describe();
 `,
     language: "javascript",
-    likeCount: 707,
+    viewCount: 707,
+    likeCount: 567,
+    commentCount: 10,
+    postedAt: "Jan 10, 2024",
     user: {
       id: "10",
       username: "Jack",
@@ -194,7 +227,10 @@ fruits.forEach(fruit => {
 });
 `,
     language: "javascript",
-    likeCount: 808,
+    viewCount: 808,
+    likeCount: 678,
+    commentCount: 11,
+    postedAt: "Jan 11, 2024",
     user: {
       id: "11",
       username: "Kevin",
@@ -213,7 +249,10 @@ const user = users.find(user => user.id === 2);
 console.log(user.name); // "Bob"
 `,
     language: "javascript",
-    likeCount: 909,
+    viewCount: 909,
+    likeCount: 789,
+    commentCount: 12,
+    postedAt: "Jan 12, 2024",
     user: {
       id: "12",
       username: "Lily",
@@ -237,7 +276,10 @@ counter.increment(); // 1
 counter.increment(); // 2
 `,
     language: "javascript",
-    likeCount: 1010,
+    viewCount: 1010,
+    likeCount: 890,
+    commentCount: 13,
+    postedAt: "Jan 13, 2024",
     user: {
       id: "13",
       username: "Mike",
@@ -254,7 +296,10 @@ setTimeout(() => {
 console.log('End');
 `,
     language: "javascript",
-    likeCount: 1111,
+    viewCount: 1111,
+    likeCount: 901,
+    commentCount: 14,
+    postedAt: "Jan 14, 2024",
     user: {
       id: "14",
       username: "Nancy",
@@ -270,7 +315,10 @@ const combined = [...first, ...second];
 console.log(combined);
 `,
     language: "javascript",
-    likeCount: 1212,
+    viewCount: 1212,
+    likeCount: 911,
+    commentCount: 15,
+    postedAt: "Jan 15, 2024",
     user: {
       id: "15",
       username: "Oscar",
@@ -289,7 +337,10 @@ console.log(name); // "Dave"
 console.log(age); // 34
 `,
     language: "javascript",
-    likeCount: 1313,
+    viewCount: 1313,
+    likeCount: 912,
+    commentCount: 16,
+    postedAt: "Jan 16, 2024",
     user: {
       id: "16",
       username: "Patty",
@@ -304,7 +355,10 @@ const sum = numbers.reduce((accumulator, currentValue) => accumulator + currentV
 console.log(sum); // 15
 `,
     language: "javascript",
-    likeCount: 1414,
+    viewCount: 1414,
+    likeCount: 913,
+    commentCount: 17,
+    postedAt: "Jan 17, 2024",
     user: {
       id: "17",
       username: "Quincy",
@@ -320,7 +374,10 @@ Goodbye!\`;
 console.log(greeting);
 `,
     language: "javascript",
-    likeCount: 1515,
+    viewCount: 1515,
+    likeCount: 914,
+    commentCount: 18,
+    postedAt: "Jan 18, 2024",
     user: {
       id: "18",
       username: "Roger",
@@ -338,7 +395,10 @@ const dynamicObject = {
 console.log(dynamicObject.color); // "blue"
 `,
     language: "javascript",
-    likeCount: 1616,
+    viewCount: 1616,
+    likeCount: 915,
+    commentCount: 19,
+    postedAt: "Jan 19, 2024",
     user: {
       id: "19",
       username: "Sally",
@@ -367,7 +427,10 @@ doubleAfter2Seconds(10).then((result) => {
 });
 `,
     language: "javascript",
-    likeCount: 1717,
+    viewCount: 1717,
+    likeCount: 916,
+    commentCount: 20,
+    postedAt: "Jan 20, 2024",
     user: {
       id: "20",
       username: "Tom",
@@ -382,7 +445,10 @@ const letters = Array.from(str);
 console.log(letters); // ['h', 'e', 'l', 'l', 'o']
 `,
     language: "javascript",
-    likeCount: 1818,
+    viewCount: 1818,
+    likeCount: 917,
+    commentCount: 21,
+    postedAt: "Jan 21, 2024",
     user: {
       id: "21",
       username: "Uma",
@@ -402,7 +468,10 @@ fruits.set('cherries', 7);
 console.log(fruits.get('bananas')); // 10
 `,
     language: "javascript",
-    likeCount: 1919,
+    viewCount: 1919,
+    likeCount: 918,
+    commentCount: 22,
+    postedAt: "Jan 22, 2024",
     user: {
       id: "22",
       username: "Victor",
@@ -416,7 +485,10 @@ console.log(fruits.get('bananas')); // 10
 console.log(numbers); // Set {1, 2, 3, 4}
 `,
     language: "javascript",
-    likeCount: 2020,
+    viewCount: 2020,
+    likeCount: 919,
+    commentCount: 23,
+    postedAt: "Jan 23, 2024",
     user: {
       id: "23",
       username: "Wendy",
@@ -432,7 +504,10 @@ console.log(second); // 2
 console.log(fourth); // 4
 `,
     language: "javascript",
-    likeCount: 2121,
+    viewCount: 2121,
+    likeCount: 920,
+    commentCount: 24,
+    postedAt: "Jan 24, 2024",
     user: {
       id: "24",
       username: "Xavier",
@@ -448,7 +523,10 @@ console.log(fourth); // 4
 .catch(error => console.error('Error:', error));
 `,
     language: "javascript",
-    likeCount: 2222,
+    viewCount: 2222,
+    likeCount: 921,
+    commentCount: 25,
+    postedAt: "Jan 25, 2024",
     user: {
       id: "25",
       username: "Yvonne",
@@ -462,7 +540,10 @@ console.log(fourth); // 4
 console.log(add(5, 3)); // 8
 `,
     language: "javascript",
-    likeCount: 2323,
+    viewCount: 2323,
+    likeCount: 922,
+    commentCount: 26,
+    postedAt: "Jan 26, 2024",
     user: {
       id: "26",
       username: "Zack",
@@ -485,7 +566,10 @@ console.log(add(5, 3)); // 8
 fetchData();
 `,
     language: "javascript",
-    likeCount: 2424,
+    viewCount: 2424,
+    likeCount: 923,
+    commentCount: 27,
+    postedAt: "Jan 27, 2024",
     user: {
       id: "27",
       username: "Alice",
@@ -502,7 +586,10 @@ const person = { name, age };
 console.log(person); // { name: 'Alice', age: 25 }
 `,
     language: "javascript",
-    likeCount: 2525,
+    viewCount: 2525,
+    likeCount: 924,
+    commentCount: 28,
+    postedAt: "Jan 28, 2024",
     user: {
       id: "28",
       username: "Bob",
@@ -518,7 +605,10 @@ for (const key in person) {
 }
 `,
     language: "javascript",
-    likeCount: 2626,
+    viewCount: 2626,
+    likeCount: 925,
+    commentCount: 29,
+    postedAt: "Jan 29, 2024",
     user: {
       id: "29",
       username: "Charlie",
@@ -534,7 +624,10 @@ for (const color of colors) {
 }
 `,
     language: "javascript",
-    likeCount: 2727,
+    viewCount: 2727,
+    likeCount: 926,
+    commentCount: 30,
+    postedAt: "Jan 30, 2024",
     user: {
       id: "30",
       username: "Dave",
