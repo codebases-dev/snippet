@@ -22,6 +22,7 @@ export function Card({ post }: CardProps) {
         lineHeight: 1,
         boxShadow: "0 0 0 1px token(colors.gray.200) inset",
         gap: "1rem",
+        background: "white",
       })}
     >
       <div

@@ -18,6 +18,7 @@ export function Header() {
         height: "4rem",
         paddingX: "1.5rem",
         borderBottom: "1px solid #e2e8f0",
+        background: "white",
       })}
     >
       <div>

@@ -8,6 +8,7 @@ export function Container({ className, children, ...props }: ContainerProps) {
       className={cx(
         css({
           padding: "1rem",
+          background: "gray.50",
         }),
         className
       )}
