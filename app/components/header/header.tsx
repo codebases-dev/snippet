@@ -1,4 +1,5 @@
 import {
+  SignedIn,
   SignedOut,
   SignInButton,
   SignUpButton,
@@ -42,7 +43,34 @@ export function Header() {
           alignItems: "center",
         })}
       >
-        <UserButton />
+        <SignedIn>
+          <div
+            className={css({
+              display: "flex",
+              alignItems: "center",
+              gap: "1rem",
+            })}
+          >
+            <a href="/new">
+              <button
+                className={css({
+                  paddingX: "0.75rem",
+                  height: "2.125rem",
+                  borderRadius: "md",
+                  backgroundColor: { base: "black", _hover: "gray.800" },
+                  color: "white",
+                  fontSize: "sm",
+                  lineHeight: 1,
+                  fontWeight: "semibold",
+                  cursor: "pointer",
+                })}
+              >
+                Create Snippet
+              </button>
+            </a>
+            <UserButton />
+          </div>
+        </SignedIn>
         <SignedOut>
           <div
             className={css({
