@@ -1,12 +1,10 @@
 import { json, type MetaFunction } from "@remix-run/cloudflare";
 import { useLoaderData } from "@remix-run/react";
 import { css } from "styled-system/css";
-import { Header } from "~/components/header";
 import { getPosts, Post } from "~/models/post.server";
 import hljs from "highlight.js";
 import { Card } from "~/components/card";
 import { generateGridTemplateAreas } from "~/utils/grid";
-import { Container } from "~/components/container";
 
 export const meta: MetaFunction = () => {
   return [
@@ -81,34 +79,31 @@ export default function Index() {
   const { posts, cardStyleHtml } = useLoaderData<typeof loader>();
 
   return (
-    <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }}>
-      <Header />
-      <Container>
-        <div dangerouslySetInnerHTML={{ __html: cardStyleHtml }} />
-        <div
-          className={css({
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            fontSize: "1rem",
-            lineHeight: 2,
-            gap: "1rem",
-          })}
-        >
-          <ul className="card-list">
-            {posts.map((post) => (
-              <li
-                key={post.id}
-                style={{
-                  gridArea: `item${post.id}`,
-                }}
-              >
-                <Card post={post} />
-              </li>
-            ))}
-          </ul>
-        </div>
-      </Container>
-    </div>
+    <>
+      <div dangerouslySetInnerHTML={{ __html: cardStyleHtml }} />
+      <div
+        className={css({
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          fontSize: "1rem",
+          lineHeight: 2,
+          gap: "1rem",
+        })}
+      >
+        <ul className="card-list">
+          {posts.map((post) => (
+            <li
+              key={post.id}
+              style={{
+                gridArea: `item${post.id}`,
+              }}
+            >
+              <Card post={post} />
+            </li>
+          ))}
+        </ul>
+      </div>
+    </>
   );
 }
