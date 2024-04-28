@@ -1,10 +1,15 @@
-import { json, type MetaFunction } from "@remix-run/cloudflare";
+import {
+  json,
+  LoaderFunctionArgs,
+  type MetaFunction,
+} from "@remix-run/cloudflare";
 import { useLoaderData } from "@remix-run/react";
 import { css } from "styled-system/css";
 import { getPosts, Post } from "~/models/post.server";
 import hljs from "highlight.js";
 import { Card } from "~/components/card";
 import { generateGridTemplateAreas } from "~/utils/grid";
+import { getGraphqlClient } from "~/graphql-client";
 
 export const meta: MetaFunction = () => {
   return [
@@ -62,7 +67,12 @@ function generateCardStyleHtml(posts: Post[]) {
   `;
 }
 
-export async function loader() {
+export async function loader({ context }: LoaderFunctionArgs) {
+  const client = getGraphqlClient(context.cloudflare.env.API_URL);
+  const { users } = await client.GetUsers();
+  const { snippets } = await client.GetSnippets();
+  console.log({ users, snippets });
+
   const posts = await getPosts();
   const transformedPosts = posts.map((post) => ({
     ...post,

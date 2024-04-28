@@ -1,0 +1,9 @@
+query GetSnippets {
+  snippets {
+    code
+    id
+    language
+    postedAt
+    userId
+  }
+}
