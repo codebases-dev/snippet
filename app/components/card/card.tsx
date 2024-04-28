@@ -100,7 +100,8 @@ export function Card({ post }: CardProps) {
               borderRadius: "0.5rem",
               overflow: "hidden",
               boxSizing: "border-box",
-              lineHeight: 1.5,
+              fontSize: "0.833rem",
+              lineHeight: "1.5rem",
             })
           )}
           dangerouslySetInnerHTML={{ __html: post.codeHtml }}

@@ -24,6 +24,10 @@ export const meta: MetaFunction = () => {
 function generateCardStyleHtml(posts: Post[]) {
   return `
     <style>
+      pre code.hljs {
+        padding: 1rem;
+      }
+
       .card-list {
         display: grid;
         grid-template-areas: ${generateGridTemplateAreas(posts, 4)};
