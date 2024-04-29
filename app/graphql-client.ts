@@ -5,7 +5,7 @@ let sdkCache: Sdk | undefined;
 
 export function getGraphqlClient(apiUrl: string) {
   if (!sdkCache) {
-    const client = new GraphQLClient(apiUrl);
+    const client = new GraphQLClient(apiUrl, { fetch });
     sdkCache = getSdk(client);
   }
 
