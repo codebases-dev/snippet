@@ -4,6 +4,13 @@ query GetSnippets {
     id
     language
     postedAt
+    title
     userId
+    user {
+      displayName
+      id
+      imageUrl
+      username
+    }
   }
 }

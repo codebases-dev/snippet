@@ -5,11 +5,12 @@ import {
 } from "@remix-run/cloudflare";
 import { useLoaderData } from "@remix-run/react";
 import { css } from "styled-system/css";
-import { getPosts, Post } from "~/models/post.server";
+import { getSnippets, Snippet } from "~/models/snippet.server";
 import hljs from "highlight.js";
 import { Card } from "~/components/card";
 import { generateGridTemplateAreas } from "~/utils/grid";
 import { getGraphqlClient } from "~/graphql-client";
+import { format } from "@formkit/tempo";
 
 export const meta: MetaFunction = () => {
   return [
@@ -21,7 +22,7 @@ export const meta: MetaFunction = () => {
   ];
 };
 
-function generateCardStyleHtml(posts: Post[]) {
+function generateCardStyleHtml(snippets: Snippet[]) {
   return `
     <style>
       pre code.hljs {
@@ -30,7 +31,7 @@ function generateCardStyleHtml(posts: Post[]) {
 
       .card-list {
         display: grid;
-        grid-template-areas: ${generateGridTemplateAreas(posts, 4)};
+        grid-template-areas: ${generateGridTemplateAreas(snippets, 4)};
         grid-template-columns: repeat(4, 28rem);
       }
       
@@ -42,14 +43,14 @@ function generateCardStyleHtml(posts: Post[]) {
       
       @media (max-width: calc(28rem * 4 + 1rem)) {
         .card-list {
-          grid-template-areas: ${generateGridTemplateAreas(posts, 3)};
+          grid-template-areas: ${generateGridTemplateAreas(snippets, 3)};
           grid-template-columns: repeat(3, 28rem);
         }
       }
       
       @media (max-width: calc(28rem * 3 + 1rem)) {
         .card-list {
-          grid-template-areas: ${generateGridTemplateAreas(posts, 2)};
+          grid-template-areas: ${generateGridTemplateAreas(snippets, 2)};
           grid-template-columns: repeat(2, 28rem);
         }
       }
@@ -58,7 +59,7 @@ function generateCardStyleHtml(posts: Post[]) {
         .card-list {
           display: block;
           width: 100%;
-          grid-template-areas: ${generateGridTemplateAreas(posts, 1)};
+          grid-template-areas: ${generateGridTemplateAreas(snippets, 1)};
           grid-template-columns: 1fr;
         }
         
@@ -73,24 +74,26 @@ function generateCardStyleHtml(posts: Post[]) {
 
 export async function loader({ context }: LoaderFunctionArgs) {
   const client = getGraphqlClient(context.cloudflare.env.API_URL);
-  const { users } = await client.GetUsers();
   const { snippets } = await client.GetSnippets();
-  console.log({ users, snippets });
 
-  const posts = await getPosts();
-  const transformedPosts = posts.map((post) => ({
-    ...post,
-    codeHtml: hljs.highlight(post.code, { language: post.language }).value,
+  const transformedSnippets = snippets.map((snippet) => ({
+    ...snippet,
+    codeHtml: hljs.highlight(snippet.code, { language: snippet.language })
+      .value,
+    viewCount: 0, // TODO: Implement view count
+    likeCount: 0, // TODO: Implement like count
+    commentCount: 0, // TODO: Implement comment count
+    postedAt: format(new Date(snippet.postedAt), "MMM D, YYYY", "en"),
   }));
 
   return json({
-    posts: transformedPosts,
-    cardStyleHtml: generateCardStyleHtml(transformedPosts),
+    snippets: transformedSnippets,
+    cardStyleHtml: generateCardStyleHtml(transformedSnippets),
   });
 }
 
 export default function Index() {
-  const { posts, cardStyleHtml } = useLoaderData<typeof loader>();
+  const { snippets, cardStyleHtml } = useLoaderData<typeof loader>();
 
   return (
     <>
@@ -106,14 +109,14 @@ export default function Index() {
         })}
       >
         <ul className="card-list">
-          {posts.map((post) => (
+          {snippets.map((snippet) => (
             <li
-              key={post.id}
+              key={snippet.id}
               style={{
-                gridArea: `item${post.id}`,
+                gridArea: `item${snippet.id}`,
               }}
             >
-              <Card post={post} />
+              <Card snippet={snippet} />
             </li>
           ))}
         </ul>

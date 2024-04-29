@@ -1,0 +1,20 @@
+mutation CreateSnippet(
+  $userId: String!
+  $title: String!
+  $code: String!
+  $language: String!
+) {
+  createSnippet(
+    userId: $userId
+    title: $title
+    code: $code
+    language: $language
+  ) {
+    code
+    id
+    language
+    postedAt
+    title
+    userId
+  }
+}

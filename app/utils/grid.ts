@@ -1,11 +1,11 @@
 import { calculateCardHeight } from "~/components/card";
-import { Post } from "~/models/post.server";
+import { Snippet } from "~/models/snippet.server";
 
 export function divideItemsIntoColumns(
-  posts: Post[],
+  posts: Snippet[],
   columnCount: number
-): Post[][] {
-  const columns = Array.from({ length: columnCount }, (): Post[] => []);
+): Snippet[][] {
+  const columns = Array.from({ length: columnCount }, (): Snippet[] => []);
 
   posts.forEach((post, index) => {
     const columnIndex = index % columnCount;
@@ -15,7 +15,10 @@ export function divideItemsIntoColumns(
   return columns;
 }
 
-export function generateGridTemplateAreas(posts: Post[], columnCount: number) {
+export function generateGridTemplateAreas(
+  posts: Snippet[],
+  columnCount: number
+) {
   const dividedColumns = divideItemsIntoColumns(posts, columnCount);
 
   const gridTemplateAreaBlocks = dividedColumns.map((columnItems) => {

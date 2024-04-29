@@ -1,14 +1,14 @@
 import { css, cx } from "styled-system/css";
 import "highlight.js/styles/github-dark.css";
 import { EyeIcon, HeartIcon, MessageCircleMoreIcon } from "lucide-react";
-import { Post } from "~/models/post.server";
+import { Snippet } from "~/models/snippet.server";
 
 interface CardProps {
-  post: Post;
+  snippet: Snippet;
 }
 
-export function Card({ post }: CardProps) {
-  if (!post.codeHtml) {
+export function Card({ snippet }: CardProps) {
+  if (!snippet.codeHtml) {
     throw new Error("post.codeHtml is required");
   }
 
@@ -33,9 +33,9 @@ export function Card({ post }: CardProps) {
           width: "100%",
         })}
       >
-        {post.user.imageUrl && (
+        {snippet.user.imageUrl && (
           <img
-            src={post.user.imageUrl}
+            src={snippet.user.imageUrl}
             alt=""
             className={css({
               width: "2.25rem",
@@ -65,7 +65,7 @@ export function Card({ post }: CardProps) {
               whiteSpace: "nowrap",
             })}
           >
-            {post.user.displayName}
+            {snippet.user.displayName}
           </div>
           <div
             className={css({
@@ -76,7 +76,7 @@ export function Card({ post }: CardProps) {
               whiteSpace: "nowrap",
             })}
           >
-            @{post.user.username}
+            @{snippet.user.username}
           </div>
         </div>
       </div>
@@ -90,7 +90,7 @@ export function Card({ post }: CardProps) {
           whiteSpace: "nowrap",
         })}
       >
-        Card Component
+        {snippet.title}
       </h2>
       <pre style={{ margin: 0 }}>
         <code
@@ -104,7 +104,7 @@ export function Card({ post }: CardProps) {
               lineHeight: "1.5rem",
             })
           )}
-          dangerouslySetInnerHTML={{ __html: post.codeHtml }}
+          dangerouslySetInnerHTML={{ __html: snippet.codeHtml }}
         />
       </pre>
       <div
@@ -124,7 +124,7 @@ export function Card({ post }: CardProps) {
           })}
         >
           <EyeIcon size={16} strokeWidth={1.25} />
-          <div>{post.viewCount}</div>
+          <div>{snippet.viewCount}</div>
         </div>
         <div
           className={css({
@@ -134,7 +134,7 @@ export function Card({ post }: CardProps) {
           })}
         >
           <HeartIcon size={16} strokeWidth={1.25} />
-          <div>{post.likeCount}</div>
+          <div>{snippet.likeCount}</div>
         </div>
         <div
           className={css({
@@ -144,14 +144,14 @@ export function Card({ post }: CardProps) {
           })}
         >
           <MessageCircleMoreIcon size={16} strokeWidth={1.25} />
-          <div>{post.commentCount}</div>
+          <div>{snippet.commentCount}</div>
         </div>
         <div
           className={css({
             marginLeft: "auto",
           })}
         >
-          {post.postedAt}
+          {snippet.postedAt}
         </div>
       </div>
     </div>

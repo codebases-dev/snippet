@@ -27,50 +27,63 @@ export type Mutation = {
 export type MutationCreateSnippetArgs = {
   code?: InputMaybe<Scalars['String']['input']>;
   language?: InputMaybe<Scalars['String']['input']>;
-  userId?: InputMaybe<Scalars['Int']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+  userId?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type Query = {
   __typename?: 'Query';
   /** List of snippets */
   snippets: Array<Snippet>;
-  /** A user */
-  user: User;
-  /** List of users */
-  users: Array<User>;
-};
-
-
-export type QueryUserArgs = {
-  id?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type Snippet = {
   __typename?: 'Snippet';
   code: Scalars['String']['output'];
-  id: Scalars['Int']['output'];
+  id: Scalars['String']['output'];
   language: Scalars['String']['output'];
   postedAt: Scalars['String']['output'];
-  userId?: Maybe<Scalars['Int']['output']>;
+  title: Scalars['String']['output'];
+  user: User;
+  userId: Scalars['String']['output'];
 };
 
 export type User = {
   __typename?: 'User';
+  displayName: Scalars['String']['output'];
   id: Scalars['String']['output'];
-  name: Scalars['String']['output'];
+  imageUrl: Scalars['String']['output'];
+  username: Scalars['String']['output'];
 };
+
+export type CreateSnippetMutationVariables = Exact<{
+  userId: Scalars['String']['input'];
+  title: Scalars['String']['input'];
+  code: Scalars['String']['input'];
+  language: Scalars['String']['input'];
+}>;
+
+
+export type CreateSnippetMutation = { __typename?: 'Mutation', createSnippet: { __typename?: 'Snippet', code: string, id: string, language: string, postedAt: string, title: string, userId: string } };
 
 export type GetSnippetsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetSnippetsQuery = { __typename?: 'Query', snippets: Array<{ __typename?: 'Snippet', code: string, id: number, language: string, postedAt: string, userId?: number | null }> };
-
-export type GetUsersQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetSnippetsQuery = { __typename?: 'Query', snippets: Array<{ __typename?: 'Snippet', code: string, id: string, language: string, postedAt: string, title: string, userId: string, user: { __typename?: 'User', displayName: string, id: string, imageUrl: string, username: string } }> };
 
 
-export type GetUsersQuery = { __typename?: 'Query', users: Array<{ __typename?: 'User', id: string, name: string }> };
-
-
+export const CreateSnippetDocument = gql`
+    mutation CreateSnippet($userId: String!, $title: String!, $code: String!, $language: String!) {
+  createSnippet(userId: $userId, title: $title, code: $code, language: $language) {
+    code
+    id
+    language
+    postedAt
+    title
+    userId
+  }
+}
+    `;
 export const GetSnippetsDocument = gql`
     query GetSnippets {
   snippets {
@@ -78,15 +91,14 @@ export const GetSnippetsDocument = gql`
     id
     language
     postedAt
+    title
     userId
-  }
-}
-    `;
-export const GetUsersDocument = gql`
-    query GetUsers {
-  users {
-    id
-    name
+    user {
+      displayName
+      id
+      imageUrl
+      username
+    }
   }
 }
     `;
@@ -98,11 +110,11 @@ const defaultWrapper: SdkFunctionWrapper = (action, _operationName, _operationTy
 
 export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
   return {
+    CreateSnippet(variables: CreateSnippetMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<CreateSnippetMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<CreateSnippetMutation>(CreateSnippetDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'CreateSnippet', 'mutation', variables);
+    },
     GetSnippets(variables?: GetSnippetsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetSnippetsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetSnippetsQuery>(GetSnippetsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetSnippets', 'query', variables);
-    },
-    GetUsers(variables?: GetUsersQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetUsersQuery> {
-      return withWrapper((wrappedRequestHeaders) => client.request<GetUsersQuery>(GetUsersDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetUsers', 'query', variables);
     }
   };
 }

@@ -1,4 +1,4 @@
-import { Post } from "~/models/post.server";
+import { Snippet } from "~/models/snippet.server";
 
 function calculateCodeLineCount(code: string) {
   return code.endsWith("\n")
@@ -6,7 +6,7 @@ function calculateCodeLineCount(code: string) {
     : code.split("\n").length;
 }
 
-export function calculateCardHeight(post: Post) {
+export function calculateCardHeight(post: Snippet) {
   const codeLineCount = calculateCodeLineCount(post.code);
   return codeLineCount * 1.5 + 11.5;
 }

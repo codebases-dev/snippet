@@ -1,5 +1,6 @@
-export interface Post {
+export interface Snippet {
   id: string;
+  title: string;
   code: string;
   codeHtml?: string;
   language: string;
@@ -15,9 +16,10 @@ export interface Post {
   };
 }
 
-const mockPosts: Post[] = [
+const mockSnippets: Snippet[] = [
   {
     id: "1",
+    title: "Hello, World!",
     code: `console.log("Hello, World!");`,
     language: "javascript",
     viewCount: 123,
@@ -33,6 +35,7 @@ const mockPosts: Post[] = [
   },
   {
     id: "2",
+    title: "Sum of Numbers",
     code: `let numbers = [1, 2, 3, 4, 5];
 let sum = 0;
 for (let number of numbers) {
@@ -54,6 +57,7 @@ console.log(sum);
   },
   {
     id: "3",
+    title: "Greet",
     code: `function greet(name) {
   console.log("Hello, " + name + "!");
 }
@@ -73,6 +77,7 @@ greet("Alice");
   },
   {
     id: "4",
+    title: "Person",
     code: `let person = {
   name: "Bob",
   age: 30
@@ -93,6 +98,7 @@ console.log(person.name + " is " + person.age + " years old.");
   },
   {
     id: "5",
+    title: "Pass or Fail",
     code: `let score = 75;
 if (score >= 70) {
   console.log("Passed");
@@ -114,6 +120,7 @@ if (score >= 70) {
   },
   {
     id: "6",
+    title: "Doubled Numbers",
     code: `let numbers = [1, 2, 3, 4, 5];
 let doubledNumbers = numbers.map(number => number * 2);
 console.log(doubledNumbers);
@@ -132,6 +139,7 @@ console.log(doubledNumbers);
   },
   {
     id: "7",
+    title: "Young People",
     code: `let people = [
   { name: "Alice", age: 25 },
   { name: "Bob", age: 30 },
@@ -154,6 +162,7 @@ console.log(youngPeople);
   },
   {
     id: "8",
+    title: "Greeting",
     code: `let name = "Dave";
 let greeting = \`Hello, \${name}! How are you?\`;
 console.log(greeting);
@@ -172,6 +181,7 @@ console.log(greeting);
   },
   {
     id: "9",
+    title: "Async Hello World",
     code: `function asyncFunction() {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
@@ -195,6 +205,7 @@ asyncFunction().then(console.log);
   },
   {
     id: "10",
+    title: "Person Class",
     code: `class Person {
   constructor(name, age) {
     this.name = name;
@@ -221,6 +232,7 @@ alice.describe();
   },
   {
     id: "11",
+    title: "Fruits",
     code: `const fruits = ['apple', 'banana', 'cherry'];
 fruits.forEach(fruit => {
   console.log(fruit);
@@ -240,6 +252,7 @@ fruits.forEach(fruit => {
   },
   {
     id: "12",
+    title: "Find User",
     code: `const users = [
   { id: 1, name: 'Alice' },
   { id: 2, name: 'Bob' },
@@ -262,6 +275,7 @@ console.log(user.name); // "Bob"
   },
   {
     id: "13",
+    title: "Counter Class",
     code: `class Counter {
   constructor() {
     this.count = 0;
@@ -289,6 +303,7 @@ counter.increment(); // 2
   },
   {
     id: "14",
+    title: "Set Timeout",
     code: `console.log('Start');
 setTimeout(() => {
   console.log('This runs after 2 seconds');
@@ -309,6 +324,7 @@ console.log('End');
   },
   {
     id: "15",
+    title: "Combine Arrays",
     code: `const first = [1, 2, 3];
 const second = [4, 5, 6];
 const combined = [...first, ...second];
@@ -328,6 +344,7 @@ console.log(combined);
   },
   {
     id: "16",
+    title: "Destructuring",
     code: `const person = {
   name: 'Dave',
   age: 34
@@ -350,6 +367,7 @@ console.log(age); // 34
   },
   {
     id: "17",
+    title: "Sum of Numbers",
     code: `const numbers = [1, 2, 3, 4, 5];
 const sum = numbers.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
 console.log(sum); // 15
@@ -368,6 +386,7 @@ console.log(sum); // 15
   },
   {
     id: "18",
+    title: "Multi-line String",
     code: `const greeting = \`Hello,
 This is a multi-line string!
 Goodbye!\`;
@@ -387,6 +406,7 @@ console.log(greeting);
   },
   {
     id: "19",
+    title: "Dynamic Object",
     code: `const key = "color";
 const value = "blue";
 const dynamicObject = {
@@ -408,6 +428,7 @@ console.log(dynamicObject.color); // "blue"
   },
   {
     id: "20",
+    title: "Promise Chain",
     code: `function doubleAfter2Seconds(x) {
   return new Promise(resolve => {
     setTimeout(() => {
@@ -440,6 +461,7 @@ doubleAfter2Seconds(10).then((result) => {
   },
   {
     id: "21",
+    title: "Array from String",
     code: `const str = 'hello';
 const letters = Array.from(str);
 console.log(letters); // ['h', 'e', 'l', 'l', 'o']
@@ -458,6 +480,7 @@ console.log(letters); // ['h', 'e', 'l', 'l', 'o']
   },
   {
     id: "22",
+    title: "Map and Set",
     code: `const fruits = new Map([
   ['apples', 5],
   ['bananas', 10],
@@ -481,6 +504,7 @@ console.log(fruits.get('bananas')); // 10
   },
   {
     id: "23",
+    title: "Set",
     code: `const numbers = new Set([1, 2, 3, 4, 4, 2]);
 console.log(numbers); // Set {1, 2, 3, 4}
 `,
@@ -498,6 +522,7 @@ console.log(numbers); // Set {1, 2, 3, 4}
   },
   {
     id: "24",
+    title: "Destructuring Array",
     code: `const [first, second, , fourth] = [1, 2, 3, 4];
 console.log(first); // 1
 console.log(second); // 2
@@ -517,6 +542,7 @@ console.log(fourth); // 4
   },
   {
     id: "25",
+    title: "Fetch Data",
     code: `fetch('https://api.example.com/data')
 .then(response => response.json())
 .then(data => console.log(data))
@@ -536,6 +562,7 @@ console.log(fourth); // 4
   },
   {
     id: "26",
+    title: "Arrow Function",
     code: `const add = (a, b) => a + b;
 console.log(add(5, 3)); // 8
 `,
@@ -553,6 +580,7 @@ console.log(add(5, 3)); // 8
   },
   {
     id: "27",
+    title: "Async Await",
     code: `async function fetchData() {
   try {
     const response = await fetch('https://api.example.com/data');
@@ -579,6 +607,7 @@ fetchData();
   },
   {
     id: "28",
+    title: "Object Literal",
     code: `const name = 'Alice';
 const age = 25;
 
@@ -599,6 +628,7 @@ console.log(person); // { name: 'Alice', age: 25 }
   },
   {
     id: "29",
+    title: "For In Loop",
     code: `const person = { name: 'Bob', age: 30, city: 'New York' };
 for (const key in person) {
   console.log(\`\${key}: \${person[key]}\`);
@@ -618,6 +648,7 @@ for (const key in person) {
   },
   {
     id: "30",
+    title: "For Of Loop",
     code: `const colors = ['red', 'green', 'blue'];
 for (const color of colors) {
   console.log(color);
@@ -637,6 +668,6 @@ for (const color of colors) {
   },
 ];
 
-export async function getPosts() {
-  return mockPosts;
+export async function getSnippets() {
+  return mockSnippets;
 }
