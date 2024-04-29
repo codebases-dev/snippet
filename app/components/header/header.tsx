@@ -11,6 +11,9 @@ export function Header() {
   return (
     <header
       className={css({
+        position: "fixed",
+        width: "100%",
+        top: 0,
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",

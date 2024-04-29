@@ -1,14 +1,28 @@
 import { Outlet } from "@remix-run/react";
+import { css } from "styled-system/css";
 import { Container } from "~/components/container";
 import { Header } from "~/components/header";
 
 export default function BaseLayout() {
   return (
-    <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }}>
+    <div
+      style={{
+        fontFamily: "system-ui, sans-serif",
+        lineHeight: "1.8",
+      }}
+    >
       <Header />
-      <Container>
-        <Outlet />
-      </Container>
+      <main
+        className={css({
+          paddingTop: "4rem",
+          background: "gray.50",
+          minHeight: "100vh",
+        })}
+      >
+        <Container>
+          <Outlet />
+        </Container>
+      </main>
     </div>
   );
 }

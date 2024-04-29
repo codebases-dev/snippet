@@ -5,7 +5,7 @@ import {
 } from "@remix-run/cloudflare";
 import { useLoaderData } from "@remix-run/react";
 import { css } from "styled-system/css";
-import { getSnippets, Snippet } from "~/models/snippet.server";
+import { Snippet } from "~/models/snippet.server";
 import hljs from "highlight.js";
 import { Card } from "~/components/card";
 import { generateGridTemplateAreas } from "~/utils/grid";
