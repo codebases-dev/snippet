@@ -43,6 +43,7 @@ export function Card({ snippet }: CardProps) {
               borderRadius: "full",
               border: "1px solid",
               borderColor: "gray.200",
+              cursor: "pointer",
             })}
           />
         )}
@@ -63,6 +64,10 @@ export function Card({ snippet }: CardProps) {
               overflow: "hidden",
               textOverflow: "ellipsis",
               whiteSpace: "nowrap",
+              cursor: "pointer",
+              _hover: {
+                textDecoration: "underline",
+              },
             })}
           >
             {snippet.user.displayName}
@@ -74,6 +79,10 @@ export function Card({ snippet }: CardProps) {
               overflow: "hidden",
               textOverflow: "ellipsis",
               whiteSpace: "nowrap",
+              cursor: "pointer",
+              _hover: {
+                textDecoration: "underline",
+              },
             })}
           >
             @{snippet.user.username}
