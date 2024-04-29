@@ -89,22 +89,24 @@ export function Card({ snippet }: CardProps) {
           </div>
         </div>
       </div>
-      <h2
-        className={css({
-          fontSize: "1.25rem",
-          fontWeight: "bold",
-          color: "gray.800",
-          overflow: "hidden",
-          textOverflow: "ellipsis",
-          whiteSpace: "nowrap",
-          cursor: "pointer",
-          _hover: {
-            color: "blue.700",
-          },
-        })}
-      >
-        {snippet.title}
-      </h2>
+      <a href={`/${snippet.user.username}/${snippet.id}`}>
+        <h2
+          className={css({
+            fontSize: "1.25rem",
+            fontWeight: "bold",
+            color: "gray.800",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            whiteSpace: "nowrap",
+            cursor: "pointer",
+            _hover: {
+              color: "blue.700",
+            },
+          })}
+        >
+          {snippet.title}
+        </h2>
+      </a>
       <pre style={{ margin: 0 }}>
         <code
           className={cx(
