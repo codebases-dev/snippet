@@ -97,9 +97,9 @@ export function Card({ snippet }: CardProps) {
           overflow: "hidden",
           textOverflow: "ellipsis",
           whiteSpace: "nowrap",
+          cursor: "pointer",
           _hover: {
             color: "blue.700",
-            cursor: "pointer",
           },
         })}
       >
