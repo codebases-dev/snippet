@@ -53,47 +53,62 @@ export default function New() {
   const errors = lastResult?.errors;
 
   return (
-    <Form method="post">
-      <div>
-        <label htmlFor="title">Title</label>
-        <input type="text" name="title" />
-        {errors?.title?.errors?.map((error) => (
-          <p key={error} className={css({ color: "red.500" })}>
-            {error}
-          </p>
-        ))}
-      </div>
-      <div>
-        <label htmlFor="language">Language</label>
-        <select name="language">
-          <option value="javascript">JavaScript</option>
-        </select>
-      </div>
-      <div>
-        <label htmlFor="code">Content</label>
-        <textarea name="code"></textarea>
-        {errors?.code?.errors?.map((error) => (
-          <p key={error} className={css({ color: "red.500" })}>
-            {error}
-          </p>
-        ))}
-      </div>
-      <button
-        type="submit"
+    <div
+      className={css({
+        padding: "1rem",
+      })}
+    >
+      <a
+        href="/"
         className={css({
-          paddingX: "0.75rem",
-          height: "2.125rem",
-          borderRadius: "md",
-          backgroundColor: { base: "black", _hover: "gray.800" },
-          color: "white",
-          fontSize: "sm",
-          lineHeight: 1,
-          fontWeight: "semibold",
-          cursor: "pointer",
+          color: "blue.900",
+          textDecoration: "underline",
         })}
       >
-        Create
-      </button>
-    </Form>
+        Back to home
+      </a>
+      <Form method="post">
+        <div>
+          <label htmlFor="title">Title</label>
+          <input type="text" name="title" />
+          {errors?.title?.errors?.map((error) => (
+            <p key={error} className={css({ color: "red.500" })}>
+              {error}
+            </p>
+          ))}
+        </div>
+        <div>
+          <label htmlFor="language">Language</label>
+          <select name="language">
+            <option value="javascript">JavaScript</option>
+          </select>
+        </div>
+        <div>
+          <label htmlFor="code">Content</label>
+          <textarea name="code"></textarea>
+          {errors?.code?.errors?.map((error) => (
+            <p key={error} className={css({ color: "red.500" })}>
+              {error}
+            </p>
+          ))}
+        </div>
+        <button
+          type="submit"
+          className={css({
+            paddingX: "0.75rem",
+            height: "2.125rem",
+            borderRadius: "md",
+            backgroundColor: { base: "black", _hover: "gray.800" },
+            color: "white",
+            fontSize: "sm",
+            lineHeight: 1,
+            fontWeight: "semibold",
+            cursor: "pointer",
+          })}
+        >
+          Create
+        </button>
+      </Form>
+    </div>
   );
 }
