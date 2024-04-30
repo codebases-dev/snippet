@@ -1,6 +1,5 @@
 import { Outlet } from "@remix-run/react";
 import { css } from "styled-system/css";
-import { Container } from "~/components/container";
 import { Header } from "~/components/header";
 
 export default function BaseLayout() {
@@ -19,9 +18,7 @@ export default function BaseLayout() {
           minHeight: "100vh",
         })}
       >
-        <Container>
-          <Outlet />
-        </Container>
+        <Outlet />
       </main>
     </div>
   );

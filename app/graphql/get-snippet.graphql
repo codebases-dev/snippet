@@ -1,0 +1,16 @@
+query GetSnippet($id: String!) {
+  snippet(id: $id) {
+    code
+    id
+    language
+    postedAt
+    title
+    userId
+    user {
+      displayName
+      id
+      imageUrl
+      username
+    }
+  }
+}

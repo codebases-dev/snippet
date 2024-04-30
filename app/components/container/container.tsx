@@ -8,6 +8,8 @@ export function Container({ className, children, ...props }: ContainerProps) {
       className={cx(
         css({
           padding: "1rem",
+          marginLeft: "auto",
+          marginRight: "auto",
         }),
         className
       )}

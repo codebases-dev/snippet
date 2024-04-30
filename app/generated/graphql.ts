@@ -21,6 +21,8 @@ export type Mutation = {
   __typename?: 'Mutation';
   /** Create a snippet */
   createSnippet: Snippet;
+  /** Delete a snippet */
+  deleteSnippet: Snippet;
 };
 
 
@@ -31,10 +33,22 @@ export type MutationCreateSnippetArgs = {
   userId?: InputMaybe<Scalars['String']['input']>;
 };
 
+
+export type MutationDeleteSnippetArgs = {
+  id?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type Query = {
   __typename?: 'Query';
-  /** List of snippets */
+  /** Get a snippet by ID */
+  snippet: Snippet;
+  /** Get list of snippets */
   snippets: Array<Snippet>;
+};
+
+
+export type QuerySnippetArgs = {
+  id?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type Snippet = {
@@ -66,6 +80,13 @@ export type CreateSnippetMutationVariables = Exact<{
 
 export type CreateSnippetMutation = { __typename?: 'Mutation', createSnippet: { __typename?: 'Snippet', code: string, id: string, language: string, postedAt: string, title: string, userId: string } };
 
+export type GetSnippetQueryVariables = Exact<{
+  id: Scalars['String']['input'];
+}>;
+
+
+export type GetSnippetQuery = { __typename?: 'Query', snippet: { __typename?: 'Snippet', code: string, id: string, language: string, postedAt: string, title: string, userId: string, user: { __typename?: 'User', displayName: string, id: string, imageUrl: string, username: string } } };
+
 export type GetSnippetsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -81,6 +102,24 @@ export const CreateSnippetDocument = gql`
     postedAt
     title
     userId
+  }
+}
+    `;
+export const GetSnippetDocument = gql`
+    query GetSnippet($id: String!) {
+  snippet(id: $id) {
+    code
+    id
+    language
+    postedAt
+    title
+    userId
+    user {
+      displayName
+      id
+      imageUrl
+      username
+    }
   }
 }
     `;
@@ -112,6 +151,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
   return {
     CreateSnippet(variables: CreateSnippetMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<CreateSnippetMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<CreateSnippetMutation>(CreateSnippetDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'CreateSnippet', 'mutation', variables);
+    },
+    GetSnippet(variables: GetSnippetQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetSnippetQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetSnippetQuery>(GetSnippetDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetSnippet', 'query', variables);
     },
     GetSnippets(variables?: GetSnippetsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetSnippetsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetSnippetsQuery>(GetSnippetsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetSnippets', 'query', variables);

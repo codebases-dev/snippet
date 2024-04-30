@@ -5,12 +5,13 @@ import {
 } from "@remix-run/cloudflare";
 import { useLoaderData } from "@remix-run/react";
 import { css } from "styled-system/css";
-import { getSnippets, Snippet } from "~/models/snippet.server";
+import { Snippet } from "~/models/snippet.server";
 import hljs from "highlight.js";
 import { Card } from "~/components/card";
 import { generateGridTemplateAreas } from "~/utils/grid";
 import { getGraphqlClient } from "~/graphql-client";
 import { format } from "@formkit/tempo";
+import { Container } from "~/components/container";
 
 export const meta: MetaFunction = () => {
   return [
@@ -86,12 +87,6 @@ export async function loader({ context }: LoaderFunctionArgs) {
       commentCount: 0, // TODO: Implement comment count
       postedAt: format(new Date(snippet.postedAt), "MMM D, YYYY", "en"),
     })),
-    ...(await getSnippets()).map((snippet) => ({
-      ...snippet,
-      codeHtml: hljs.highlight(snippet.code, { language: snippet.language })
-        .value,
-      postedAt: format(new Date(snippet.postedAt), "MMM D, YYYY", "en"),
-    })),
   ];
 
   return json({
@@ -104,7 +99,7 @@ export default function Index() {
   const { snippets, cardStyleHtml } = useLoaderData<typeof loader>();
 
   return (
-    <>
+    <Container>
       <div dangerouslySetInnerHTML={{ __html: cardStyleHtml }} />
       <div
         className={css({
@@ -129,6 +124,6 @@ export default function Index() {
           ))}
         </ul>
       </div>
-    </>
+    </Container>
   );
 }
