@@ -2,6 +2,7 @@ import { css, cx } from "styled-system/css";
 import "highlight.js/styles/github-dark.css";
 import { EyeIcon, HeartIcon, MessageCircleMoreIcon } from "lucide-react";
 import { Snippet } from "~/models/snippet.server";
+import { Link } from "@remix-run/react";
 
 interface CardProps {
   snippet: Snippet;
@@ -24,6 +25,9 @@ export function Card({ snippet }: CardProps) {
         gap: "1rem",
         background: "white",
       })}
+      style={{
+        viewTransitionName: `snippet-card-${snippet.id}`,
+      }}
     >
       <div
         className={css({
@@ -45,6 +49,9 @@ export function Card({ snippet }: CardProps) {
               borderColor: "gray.200",
               cursor: "pointer",
             })}
+            style={{
+              viewTransitionName: `snippet-avatar-${snippet.id}`,
+            }}
           />
         )}
         <div
@@ -69,6 +76,9 @@ export function Card({ snippet }: CardProps) {
                 textDecoration: "underline",
               },
             })}
+            style={{
+              viewTransitionName: `snippet-display-name-${snippet.id}`,
+            }}
           >
             {snippet.user.displayName}
           </div>
@@ -84,12 +94,18 @@ export function Card({ snippet }: CardProps) {
                 textDecoration: "underline",
               },
             })}
+            style={{
+              viewTransitionName: `snippet-username-${snippet.id}`,
+            }}
           >
             @{snippet.user.username}
           </div>
         </div>
       </div>
-      <a href={`/${snippet.user.username}/${snippet.id}`}>
+      <Link
+        to={`/${snippet.user.username}/${snippet.id}`}
+        unstable_viewTransition
+      >
         <h2
           className={css({
             marginY: "-0.125rem",
@@ -105,10 +121,13 @@ export function Card({ snippet }: CardProps) {
               color: "blue.700",
             },
           })}
+          style={{
+            viewTransitionName: `snippet-title-${snippet.id}`,
+          }}
         >
           {snippet.title}
         </h2>
-      </a>
+      </Link>
       <pre style={{ margin: 0 }}>
         <code
           className={cx(
@@ -121,6 +140,9 @@ export function Card({ snippet }: CardProps) {
               lineHeight: "1.5rem",
             })
           )}
+          style={{
+            viewTransitionName: `snippet-code-${snippet.id}`,
+          }}
           dangerouslySetInnerHTML={{ __html: snippet.codeHtml }}
         />
       </pre>
