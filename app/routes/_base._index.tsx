@@ -77,17 +77,15 @@ export async function loader({ context }: LoaderFunctionArgs) {
   const client = getGraphqlClient(context.cloudflare.env.API_URL);
   const { snippets } = await client.GetSnippets();
 
-  const transformedSnippets = [
-    ...snippets.map((snippet) => ({
-      ...snippet,
-      codeHtml: hljs.highlight(snippet.code, { language: snippet.language })
-        .value,
-      viewCount: 0, // TODO: Implement view count
-      likeCount: 0, // TODO: Implement like count
-      commentCount: 0, // TODO: Implement comment count
-      postedAt: format(new Date(snippet.postedAt), "MMM D, YYYY", "en"),
-    })),
-  ];
+  const transformedSnippets = snippets.map((snippet) => ({
+    ...snippet,
+    codeHtml: hljs.highlight(snippet.code, { language: snippet.language })
+      .value,
+    viewCount: 0, // TODO: Implement view count
+    likeCount: 0, // TODO: Implement like count
+    commentCount: 0, // TODO: Implement comment count
+    postedAt: format(new Date(snippet.postedAt), "MMM D, YYYY", "en"),
+  }));
 
   return json({
     snippets: transformedSnippets,
