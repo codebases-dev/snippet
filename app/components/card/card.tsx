@@ -92,8 +92,10 @@ export function Card({ snippet }: CardProps) {
       <a href={`/${snippet.user.username}/${snippet.id}`}>
         <h2
           className={css({
+            marginY: "-0.125rem",
             fontSize: "1.25rem",
             fontWeight: "bold",
+            lineHeight: "1.5rem",
             color: "gray.800",
             overflow: "hidden",
             textOverflow: "ellipsis",
