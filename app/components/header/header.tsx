@@ -14,6 +14,7 @@ export function Header() {
         position: "fixed",
         width: "100%",
         top: 0,
+        zIndex: 1000,
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
