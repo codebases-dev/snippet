@@ -118,7 +118,7 @@ export function Card({ snippet }: CardProps) {
             whiteSpace: "nowrap",
             cursor: "pointer",
             _hover: {
-              color: "blue.700",
+              opacity: 0.75,
             },
           })}
           style={{
