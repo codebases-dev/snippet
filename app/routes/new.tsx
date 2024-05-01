@@ -3,6 +3,15 @@ import { ActionFunctionArgs, json, redirect } from "@remix-run/cloudflare";
 import { Form, useActionData } from "@remix-run/react";
 import { css } from "styled-system/css";
 import { getGraphqlClient } from "~/graphql-client";
+import { getFormProps, useForm } from "@conform-to/react";
+import { parseWithValibot } from "conform-to-valibot";
+import * as v from "valibot";
+
+const formSchema = v.object({
+  title: v.string("Title is required"),
+  language: v.picklist(["javascript"], "Invalid language"),
+  code: v.string("Content is required"),
+});
 
 export async function action(args: ActionFunctionArgs) {
   const { request, context } = args;
@@ -12,45 +21,51 @@ export async function action(args: ActionFunctionArgs) {
     return redirect("/");
   }
 
-  const data = await request.formData();
-  let errors: Record<string, { errors: string[] }> = {};
+  const formData = await request.formData();
+  const submission = parseWithValibot(formData, {
+    schema: formSchema,
+  });
 
-  if (data.get("title") === "") {
-    errors = {
-      ...errors,
-      title: {
-        errors: ["Title is required"],
-      },
-    };
-  }
-
-  if (data.get("code") === "") {
-    errors = {
-      ...errors,
-      code: {
-        errors: ["Code is required"],
-      },
-    };
-  }
-
-  if (Object.keys(errors).length > 0) {
-    return json({ errors }, { status: 400 });
+  if (submission.status !== "success") {
+    return json({
+      success: false,
+      message: "Validation failed",
+      submission: submission.reply(),
+    });
   }
 
   const client = getGraphqlClient(context.cloudflare.env.API_URL);
-  await client.CreateSnippet({
-    userId: userId,
-    title: data.get("title")!.toString(),
-    language: data.get("language")!.toString(),
-    code: data.get("code")!.toString(),
-  });
+
+  try {
+    await client.CreateSnippet({
+      userId: userId,
+      title: formData.get("title")!.toString(),
+      language: formData.get("language")!.toString(),
+      code: formData.get("code")!.toString(),
+    });
+  } catch (error) {
+    return json({
+      success: false,
+      message: "Failed to create snippet",
+      submission: submission.reply(),
+    });
+  }
 
   return redirect("/");
 }
 
 export default function New() {
-  const lastResult = useActionData<typeof action>();
-  const errors = lastResult?.errors;
+  const formData = useActionData<typeof action>();
+  // const errors = lastResult?.errors;
+
+  const [form, { title, language, code }] = useForm({
+    lastResult: formData?.submission,
+    onValidate({ formData }) {
+      return parseWithValibot(formData, {
+        schema: formSchema,
+      });
+    },
+  });
 
   return (
     <div
@@ -67,30 +82,47 @@ export default function New() {
       >
         Back to home
       </a>
-      <Form method="post">
+      <Form method="post" {...getFormProps(form)}>
         <div>
           <label htmlFor="title">Title</label>
           <input type="text" name="title" />
-          {errors?.title?.errors?.map((error) => (
-            <p key={error} className={css({ color: "red.500" })}>
-              {error}
-            </p>
-          ))}
+          {title.errors && (
+            <div>
+              {title.errors.map((e, index) => (
+                <p key={index} className={css({ color: "red.500" })}>
+                  {e}
+                </p>
+              ))}
+            </div>
+          )}
         </div>
         <div>
           <label htmlFor="language">Language</label>
           <select name="language">
             <option value="javascript">JavaScript</option>
           </select>
+          {language.errors && (
+            <div>
+              {language.errors.map((e, index) => (
+                <p key={index} className={css({ color: "red.500" })}>
+                  {e}
+                </p>
+              ))}
+            </div>
+          )}
         </div>
         <div>
           <label htmlFor="code">Content</label>
           <textarea name="code"></textarea>
-          {errors?.code?.errors?.map((error) => (
-            <p key={error} className={css({ color: "red.500" })}>
-              {error}
-            </p>
-          ))}
+          {code.errors && (
+            <div>
+              {code.errors.map((e, index) => (
+                <p key={index} className={css({ color: "red.500" })}>
+                  {e}
+                </p>
+              ))}
+            </div>
+          )}
         </div>
         <button
           type="submit"
