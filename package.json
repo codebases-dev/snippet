@@ -5,6 +5,8 @@
   "type": "module",
   "scripts": {
     "build": "remix vite:build",
+    "cache:create": "wrangler kv:namespace create snippet-cache",
+    "cache:create:preview": "wrangler kv:namespace create snippet-cache --preview",
     "codegen": "graphql-codegen --config codegen.ts",
     "deploy": "wrangler pages deploy ./build/client",
     "dev": "remix vite:dev",

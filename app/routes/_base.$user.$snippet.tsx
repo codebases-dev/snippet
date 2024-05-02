@@ -7,10 +7,21 @@ import invariant from "tiny-invariant";
 import { Container } from "~/components/container";
 import "highlight.js/styles/github-dark.css";
 import { getGraphqlClient } from "~/graphql-client";
+import { Snippet } from "~/models/snippet.server";
 
 export const loader = async ({ params, context }: LoaderFunctionArgs) => {
   invariant(params.user, `params.user is required`);
   invariant(params.snippet, `params.snippet is required`);
+
+  const cachedSnippet = await context.cloudflare.env.snippet_cache.get(
+    `snippet-${params.user}-${params.snippet}`
+  );
+
+  if (cachedSnippet) {
+    return json({
+      snippet: JSON.parse(cachedSnippet) as Snippet,
+    });
+  }
 
   const { snippet } = await getGraphqlClient(
     context.cloudflare.env.API_URL
@@ -25,6 +36,11 @@ export const loader = async ({ params, context }: LoaderFunctionArgs) => {
     postedAt: format(new Date(snippet.postedAt), "MMM D, YYYY", "en"),
   };
 
+  context.cloudflare.env.snippet_cache.put(
+    `snippet-${params.user}-${params.snippet}`,
+    JSON.stringify(transformedSnippet)
+  );
+
   return json({
     snippet: transformedSnippet,
   });
@@ -32,6 +48,10 @@ export const loader = async ({ params, context }: LoaderFunctionArgs) => {
 
 export default function SnippetPage() {
   const { snippet } = useLoaderData<typeof loader>();
+
+  if (!snippet.codeHtml) {
+    throw new Error("post.codeHtml is required");
+  }
 
   return (
     <Container
