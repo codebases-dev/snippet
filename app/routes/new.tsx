@@ -91,7 +91,6 @@ export async function action(args: ActionFunctionArgs) {
 
 export default function New() {
   const formData = useActionData<typeof action>();
-  // const errors = lastResult?.errors;
 
   const [form, { title, language, code }] = useForm({
     lastResult: formData?.submission,
