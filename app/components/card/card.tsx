@@ -104,6 +104,7 @@ export function Card({ snippet }: CardProps) {
       </div>
       <Link
         to={`/${snippet.user.username}/${snippet.id}`}
+        prefetch="intent"
         unstable_viewTransition
       >
         <h2

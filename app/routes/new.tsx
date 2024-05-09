@@ -1,6 +1,6 @@
 import { getAuth } from "@clerk/remix/ssr.server";
 import { ActionFunctionArgs, json, redirect } from "@remix-run/cloudflare";
-import { Form, useActionData } from "@remix-run/react";
+import { Form, Link, useActionData } from "@remix-run/react";
 import { css } from "styled-system/css";
 import { getGraphqlClient } from "~/graphql-client";
 import { getFormProps, useForm } from "@conform-to/react";
@@ -108,15 +108,16 @@ export default function New() {
         padding: "1rem",
       })}
     >
-      <a
-        href="/"
+      <Link
+        to="/"
+        prefetch="intent"
         className={css({
           color: "blue.900",
           textDecoration: "underline",
         })}
       >
         Back to home
-      </a>
+      </Link>
       <Form method="post" {...getFormProps(form)}>
         <div>
           <label htmlFor="title">Title</label>

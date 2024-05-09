@@ -5,6 +5,7 @@ import {
   SignUpButton,
   UserButton,
 } from "@clerk/remix";
+import { Link } from "@remix-run/react";
 import { css } from "styled-system/css";
 
 export function Header() {
@@ -26,8 +27,9 @@ export function Header() {
       })}
     >
       <div>
-        <a
-          href="/"
+        <Link
+          to="/"
+          prefetch="intent"
           className={css({
             fontWeight: "extrabold",
           })}
@@ -40,7 +42,7 @@ export function Header() {
           >
             Snippet
           </span>
-        </a>
+        </Link>
       </div>
       <div
         className={css({
@@ -56,7 +58,7 @@ export function Header() {
               gap: "1rem",
             })}
           >
-            <a href="/new">
+            <Link to="/new" prefetch="intent">
               <button
                 className={css({
                   paddingX: "0.75rem",
@@ -72,7 +74,7 @@ export function Header() {
               >
                 Create Snippet
               </button>
-            </a>
+            </Link>
             <UserButton />
           </div>
         </SignedIn>
