@@ -6,6 +6,9 @@ import { getGraphqlClient } from "~/graphql-client";
 import { getFormProps, useForm } from "@conform-to/react";
 import { parseWithValibot } from "conform-to-valibot";
 import * as v from "valibot";
+import hljs from "highlight.js";
+import { format } from "@formkit/tempo";
+import { generateCardStyleHtml } from "~/components/card";
 
 const formSchema = v.object({
   title: v.string("Title is required"),
@@ -49,6 +52,38 @@ export async function action(args: ActionFunctionArgs) {
       message: "Failed to create snippet",
       submission: submission.reply(),
     });
+  }
+
+  const cachedSnippets = await context.cloudflare.env.snippet_cache.get(
+    "snippets"
+  );
+
+  if (cachedSnippets) {
+    const { snippets } = await client.GetSnippets();
+
+    const transformedSnippets = snippets.map((snippet) => {
+      const truncatedCode = snippet.code.split("\n").slice(0, 20).join("\n");
+
+      return {
+        ...snippet,
+        code: truncatedCode,
+        codeHtml: hljs.highlight(truncatedCode, { language: snippet.language })
+          .value,
+        viewCount: 0, // TODO: Implement view count
+        likeCount: 0, // TODO: Implement like count
+        commentCount: 0, // TODO: Implement comment count
+        postedAt: format(new Date(snippet.postedAt), "MMM D, YYYY", "en"),
+      };
+    });
+
+    context.cloudflare.env.snippet_cache.put(
+      "snippets",
+      JSON.stringify(transformedSnippets)
+    );
+
+    const cardStyleHtml = generateCardStyleHtml(transformedSnippets);
+
+    context.cloudflare.env.snippet_cache.put("cardStyleHtml", cardStyleHtml);
   }
 
   return redirect("/");

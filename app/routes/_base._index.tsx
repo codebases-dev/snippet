@@ -7,8 +7,7 @@ import { useLoaderData } from "@remix-run/react";
 import { css } from "styled-system/css";
 import { Snippet } from "~/models/snippet.server";
 import hljs from "highlight.js";
-import { Card } from "~/components/card";
-import { generateGridTemplateAreas } from "~/utils/grid";
+import { Card, generateCardStyleHtml } from "~/components/card";
 import { getGraphqlClient } from "~/graphql-client";
 import { format } from "@formkit/tempo";
 import { Container } from "~/components/container";
@@ -22,56 +21,6 @@ export const meta: MetaFunction = () => {
     },
   ];
 };
-
-function generateCardStyleHtml(snippets: Snippet[]) {
-  return `
-    <style>
-      pre code.hljs {
-        padding: 1rem;
-      }
-
-      .card-list {
-        display: grid;
-        grid-template-areas: ${generateGridTemplateAreas(snippets, 4)};
-        grid-template-columns: repeat(4, 28rem);
-      }
-      
-      .card-list > li {
-        padding-left: 0.5rem;
-        padding-right: 0.5rem;
-        padding-bottom: 1rem;
-      }
-      
-      @media (max-width: calc(28rem * 4 + 1rem)) {
-        .card-list {
-          grid-template-areas: ${generateGridTemplateAreas(snippets, 3)};
-          grid-template-columns: repeat(3, 28rem);
-        }
-      }
-      
-      @media (max-width: calc(28rem * 3 + 1rem)) {
-        .card-list {
-          grid-template-areas: ${generateGridTemplateAreas(snippets, 2)};
-          grid-template-columns: repeat(2, 28rem);
-        }
-      }
-      
-      @media (max-width: calc(28rem * 2 + 1rem)) {
-        .card-list {
-          display: block;
-          width: 100%;
-          grid-template-areas: ${generateGridTemplateAreas(snippets, 1)};
-          grid-template-columns: 1fr;
-        }
-        
-        .card-list > li {
-          padding-left: 0;
-          padding-right: 0;
-        }
-      }
-    </style>
-  `;
-}
 
 export async function loader({ context }: LoaderFunctionArgs) {
   const client = getGraphqlClient(context.cloudflare.env.API_URL);
