@@ -1,11 +1,10 @@
 import { format } from "@formkit/tempo";
 import { json, LoaderFunctionArgs } from "@remix-run/cloudflare";
 import { useLoaderData } from "@remix-run/react";
-import hljs from "highlight.js";
+import { getHighlighter } from "shiki";
 import { css, cx } from "styled-system/css";
 import invariant from "tiny-invariant";
 import { Container } from "~/components/container";
-import "highlight.js/styles/github-dark.css";
 import { getGraphqlClient } from "~/graphql-client";
 import { Snippet } from "~/models/snippet.server";
 
@@ -29,10 +28,17 @@ export const loader = async ({ params, context }: LoaderFunctionArgs) => {
     id: params.snippet,
   });
 
+  const highlighter = await getHighlighter({
+    themes: ["github-dark-dimmed"],
+    langs: ["javascript"],
+  });
+
   const transformedSnippet = {
     ...snippet,
-    codeHtml: hljs.highlight(snippet.code, { language: snippet.language })
-      .value,
+    codeHtml: highlighter.codeToHtml(snippet.code, {
+      lang: snippet.language,
+      theme: "github-dark-dimmed",
+    }),
     postedAt: format(new Date(snippet.postedAt), "MMM D, YYYY", "en"),
   };
 
@@ -163,23 +169,23 @@ export default function SnippetPage() {
         >
           {snippet.title}
         </h2>
-        <pre style={{ margin: 0 }}>
-          <code
-            className={cx(
-              "hljs",
-              css({
-                borderRadius: "0.5rem",
-                overflow: "hidden",
-                boxSizing: "border-box",
-                lineHeight: 1.75,
-              })
-            )}
-            style={{
-              viewTransitionName: `snippet-code-${snippet.id}`,
-            }}
-            dangerouslySetInnerHTML={{ __html: snippet.codeHtml }}
-          />
-        </pre>
+        <div
+          dangerouslySetInnerHTML={{ __html: snippet.codeHtml }}
+          style={{
+            viewTransitionName: `snippet-code-${snippet.id}`,
+          }}
+          className={cx(
+            css({
+              borderRadius: "0.5rem",
+              overflow: "hidden",
+              boxSizing: "border-box",
+              lineHeight: 1.75,
+              "& pre": {
+                padding: "1rem",
+              },
+            })
+          )}
+        />
       </div>
     </Container>
   );

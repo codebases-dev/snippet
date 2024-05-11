@@ -6,11 +6,11 @@ import {
 import { useLoaderData } from "@remix-run/react";
 import { css } from "styled-system/css";
 import { Snippet } from "~/models/snippet.server";
-import hljs from "highlight.js";
 import { Card, generateCardStyleHtml } from "~/components/card";
 import { getGraphqlClient } from "~/graphql-client";
 import { format } from "@formkit/tempo";
 import { Container } from "~/components/container";
+import { getHighlighter } from "shiki";
 
 export const meta: MetaFunction = () => {
   return [
@@ -40,14 +40,21 @@ export async function loader({ context }: LoaderFunctionArgs) {
 
   const { snippets } = await client.GetSnippets();
 
+  const highlighter = await getHighlighter({
+    themes: ["github-dark-dimmed"],
+    langs: ["javascript"],
+  });
+
   const transformedSnippets = snippets.map((snippet) => {
     const truncatedCode = snippet.code.split("\n").slice(0, 20).join("\n");
 
     return {
       ...snippet,
       code: truncatedCode,
-      codeHtml: hljs.highlight(truncatedCode, { language: snippet.language })
-        .value,
+      codeHtml: highlighter.codeToHtml(truncatedCode, {
+        lang: snippet.language,
+        theme: "github-dark-dimmed",
+      }),
       viewCount: 0, // TODO: Implement view count
       likeCount: 0, // TODO: Implement like count
       commentCount: 0, // TODO: Implement comment count

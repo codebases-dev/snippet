@@ -15,10 +15,6 @@ export function calculateCardHeight(post: Snippet) {
 export function generateCardStyleHtml(snippets: Snippet[]) {
   return `
     <style>
-      pre code.hljs {
-        padding: 1rem;
-      }
-
       .card-list {
         display: grid;
         grid-template-areas: ${generateGridTemplateAreas(snippets, 4)};

@@ -1,5 +1,4 @@
 import { css, cx } from "styled-system/css";
-import "highlight.js/styles/github-dark.css";
 import { EyeIcon, HeartIcon, MessageCircleMoreIcon } from "lucide-react";
 import { Snippet } from "~/models/snippet.server";
 import { Link } from "@remix-run/react";
@@ -129,24 +128,24 @@ export function Card({ snippet }: CardProps) {
           {snippet.title}
         </h2>
       </Link>
-      <pre style={{ margin: 0 }}>
-        <code
-          className={cx(
-            "hljs",
-            css({
-              borderRadius: "0.5rem",
-              overflow: "hidden",
-              boxSizing: "border-box",
-              fontSize: "0.833rem",
-              lineHeight: "1.5rem",
-            })
-          )}
-          style={{
-            viewTransitionName: `snippet-code-${snippet.id}`,
-          }}
-          dangerouslySetInnerHTML={{ __html: snippet.codeHtml }}
-        />
-      </pre>
+      <div
+        dangerouslySetInnerHTML={{ __html: snippet.codeHtml }}
+        style={{
+          viewTransitionName: `snippet-code-${snippet.id}`,
+        }}
+        className={cx(
+          css({
+            borderRadius: "0.5rem",
+            overflow: "hidden",
+            boxSizing: "border-box",
+            fontSize: "0.833rem",
+            lineHeight: "1.5rem",
+            "& pre": {
+              padding: "1rem",
+            },
+          })
+        )}
+      />
       <div
         className={css({
           display: "flex",
