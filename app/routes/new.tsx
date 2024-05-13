@@ -6,9 +6,9 @@ import { getGraphqlClient } from "~/graphql-client";
 import { getFormProps, useForm } from "@conform-to/react";
 import { parseWithValibot } from "conform-to-valibot";
 import * as v from "valibot";
-import hljs from "highlight.js";
 import { format } from "@formkit/tempo";
 import { generateCardStyleHtml } from "~/components/card";
+import { getHighlighter } from "shiki";
 
 const formSchema = v.object({
   title: v.string("Title is required"),
@@ -61,14 +61,21 @@ export async function action(args: ActionFunctionArgs) {
   if (cachedSnippets) {
     const { snippets } = await client.GetSnippets();
 
+    const highlighter = await getHighlighter({
+      themes: ["github-dark-dimmed"],
+      langs: ["javascript"],
+    });
+
     const transformedSnippets = snippets.map((snippet) => {
       const truncatedCode = snippet.code.split("\n").slice(0, 20).join("\n");
 
       return {
         ...snippet,
         code: truncatedCode,
-        codeHtml: hljs.highlight(truncatedCode, { language: snippet.language })
-          .value,
+        codeHtml: highlighter.codeToHtml(snippet.code, {
+          lang: snippet.language,
+          theme: "github-dark-dimmed",
+        }),
         viewCount: 0, // TODO: Implement view count
         likeCount: 0, // TODO: Implement like count
         commentCount: 0, // TODO: Implement comment count
