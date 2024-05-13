@@ -1,6 +1,1 @@
 @layer reset, base, tokens, recipes, utilities;
-
-::view-transition-new(*),
-::view-transition-old(*) {
-  height: 100%;
-}

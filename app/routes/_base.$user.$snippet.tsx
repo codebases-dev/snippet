@@ -76,9 +76,6 @@ export default function SnippetPage() {
           gap: "1rem",
           background: "white",
         })}
-        style={{
-          viewTransitionName: `snippet-card-${snippet.id}`,
-        }}
       >
         <div
           className={css({
@@ -99,11 +96,7 @@ export default function SnippetPage() {
                 border: "1px solid",
                 borderColor: "gray.200",
                 cursor: "pointer",
-                viewTransitionName: "snippet-avatar",
               })}
-              style={{
-                viewTransitionName: `snippet-avatar-${snippet.id}`,
-              }}
             />
           )}
           <div
@@ -124,14 +117,10 @@ export default function SnippetPage() {
                 textOverflow: "ellipsis",
                 whiteSpace: "nowrap",
                 cursor: "pointer",
-                viewTransitionName: "snippet-display-name",
                 _hover: {
                   textDecoration: "underline",
                 },
               })}
-              style={{
-                viewTransitionName: `snippet-display-name-${snippet.id}`,
-              }}
             >
               {snippet.user.displayName}
             </div>
@@ -143,14 +132,10 @@ export default function SnippetPage() {
                 textOverflow: "ellipsis",
                 whiteSpace: "nowrap",
                 cursor: "pointer",
-                viewTransitionName: "snippet-username",
                 _hover: {
                   textDecoration: "underline",
                 },
               })}
-              style={{
-                viewTransitionName: `snippet-username-${snippet.id}`,
-              }}
             >
               @{snippet.user.username}
             </div>
@@ -163,17 +148,11 @@ export default function SnippetPage() {
             lineHeight: 1.25,
             color: "gray.800",
           })}
-          style={{
-            viewTransitionName: `snippet-title-${snippet.id}`,
-          }}
         >
           {snippet.title}
         </h2>
         <div
           dangerouslySetInnerHTML={{ __html: snippet.codeHtml }}
-          style={{
-            viewTransitionName: `snippet-code-${snippet.id}`,
-          }}
           className={cx(
             css({
               borderRadius: "0.5rem",

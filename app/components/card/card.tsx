@@ -24,9 +24,6 @@ export function Card({ snippet }: CardProps) {
         gap: "1rem",
         background: "white",
       })}
-      style={{
-        viewTransitionName: `snippet-card-${snippet.id}`,
-      }}
     >
       <div
         className={css({
@@ -48,9 +45,6 @@ export function Card({ snippet }: CardProps) {
               borderColor: "gray.200",
               cursor: "pointer",
             })}
-            style={{
-              viewTransitionName: `snippet-avatar-${snippet.id}`,
-            }}
           />
         )}
         <div
@@ -75,9 +69,6 @@ export function Card({ snippet }: CardProps) {
                 textDecoration: "underline",
               },
             })}
-            style={{
-              viewTransitionName: `snippet-display-name-${snippet.id}`,
-            }}
           >
             {snippet.user.displayName}
           </div>
@@ -93,19 +84,12 @@ export function Card({ snippet }: CardProps) {
                 textDecoration: "underline",
               },
             })}
-            style={{
-              viewTransitionName: `snippet-username-${snippet.id}`,
-            }}
           >
             @{snippet.user.username}
           </div>
         </div>
       </div>
-      <Link
-        to={`/${snippet.user.username}/${snippet.id}`}
-        prefetch="intent"
-        unstable_viewTransition
-      >
+      <Link to={`/${snippet.user.username}/${snippet.id}`} prefetch="intent">
         <h2
           className={css({
             marginY: "-0.125rem",
@@ -121,18 +105,12 @@ export function Card({ snippet }: CardProps) {
               opacity: 0.75,
             },
           })}
-          style={{
-            viewTransitionName: `snippet-title-${snippet.id}`,
-          }}
         >
           {snippet.title}
         </h2>
       </Link>
       <div
         dangerouslySetInnerHTML={{ __html: snippet.codeHtml }}
-        style={{
-          viewTransitionName: `snippet-code-${snippet.id}`,
-        }}
         className={cx(
           css({
             borderRadius: "0.5rem",
