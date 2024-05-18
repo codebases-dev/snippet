@@ -1,11 +1,14 @@
 import { format } from "@formkit/tempo";
 import { json, LoaderFunctionArgs } from "@remix-run/cloudflare";
 import { useLoaderData } from "@remix-run/react";
-import { getHighlighter } from "shiki";
 import { css, cx } from "styled-system/css";
 import invariant from "tiny-invariant";
 import { Container } from "~/components/container";
 import { getGraphqlClient } from "~/graphql-client";
+import { getHighlighterCore } from "shiki/core";
+import githubDarkDimed from "shiki/themes/github-dark-dimmed.mjs";
+import js from "shiki/langs/javascript.mjs";
+import getWasm from "shiki/wasm";
 
 export const loader = async ({ params, context }: LoaderFunctionArgs) => {
   invariant(params.user, `params.user is required`);
@@ -17,9 +20,10 @@ export const loader = async ({ params, context }: LoaderFunctionArgs) => {
     id: params.snippet,
   });
 
-  const highlighter = await getHighlighter({
-    themes: ["github-dark-dimmed"],
-    langs: ["javascript"],
+  const highlighter = await getHighlighterCore({
+    themes: [githubDarkDimed],
+    langs: [js],
+    loadWasm: getWasm,
   });
 
   const transformedSnippet = {

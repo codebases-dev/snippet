@@ -9,7 +9,10 @@ import { Card, generateCardStyleHtml } from "~/components/card";
 import { getGraphqlClient } from "~/graphql-client";
 import { format } from "@formkit/tempo";
 import { Container } from "~/components/container";
-import { getHighlighter } from "shiki";
+import { getHighlighterCore } from "shiki/core";
+import githubDarkDimed from "shiki/themes/github-dark-dimmed.mjs";
+import js from "shiki/langs/javascript.mjs";
+import getWasm from "shiki/wasm";
 
 export const meta: MetaFunction = () => {
   return [
@@ -26,9 +29,10 @@ export async function loader({ context }: LoaderFunctionArgs) {
 
   const { snippets } = await client.GetSnippets();
 
-  const highlighter = await getHighlighter({
-    themes: ["github-dark-dimmed"],
-    langs: ["javascript"],
+  const highlighter = await getHighlighterCore({
+    themes: [githubDarkDimed],
+    langs: [js],
+    loadWasm: getWasm,
   });
 
   const transformedSnippets = snippets.map((snippet) => {
