@@ -5,7 +5,6 @@ import {
 } from "@remix-run/cloudflare";
 import { useLoaderData } from "@remix-run/react";
 import { css } from "styled-system/css";
-import { Snippet } from "~/models/snippet.server";
 import { Card, generateCardStyleHtml } from "~/components/card";
 import { getGraphqlClient } from "~/graphql-client";
 import { format } from "@formkit/tempo";
@@ -24,19 +23,6 @@ export const meta: MetaFunction = () => {
 
 export async function loader({ context }: LoaderFunctionArgs) {
   const client = getGraphqlClient(context.cloudflare.env.API_URL);
-  const cachedSnippets = await context.cloudflare.env.snippet_cache.get(
-    "snippets"
-  );
-  const cachedCardStyleHtml = await context.cloudflare.env.snippet_cache.get(
-    "cardStyleHtml"
-  );
-
-  if (cachedSnippets && cachedCardStyleHtml) {
-    return json({
-      snippets: JSON.parse(cachedSnippets) as Snippet[],
-      cardStyleHtml: cachedCardStyleHtml,
-    });
-  }
 
   const { snippets } = await client.GetSnippets();
 
@@ -61,15 +47,6 @@ export async function loader({ context }: LoaderFunctionArgs) {
       postedAt: format(new Date(snippet.postedAt), "MMM D, YYYY", "en"),
     };
   });
-
-  context.cloudflare.env.snippet_cache.put(
-    "snippets",
-    JSON.stringify(transformedSnippets)
-  );
-
-  const cardStyleHtml = generateCardStyleHtml(transformedSnippets);
-
-  context.cloudflare.env.snippet_cache.put("cardStyleHtml", cardStyleHtml);
 
   return json({
     snippets: transformedSnippets,
