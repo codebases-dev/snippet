@@ -9,10 +9,7 @@ import { Card, generateCardStyleHtml } from "~/components/card";
 import { getGraphqlClient } from "~/graphql-client";
 import { format } from "@formkit/tempo";
 import { Container } from "~/components/container";
-import { getHighlighterCore } from "shiki/core";
-import githubDarkDimed from "shiki/themes/github-dark-dimmed.mjs";
-import js from "shiki/langs/javascript.mjs";
-import getWasm from "shiki/wasm";
+import { getHighlightCode } from "~/api/highlight";
 
 export const meta: MetaFunction = () => {
   return [
@@ -29,28 +26,26 @@ export async function loader({ context }: LoaderFunctionArgs) {
 
   const { snippets } = await client.GetSnippets();
 
-  const highlighter = await getHighlighterCore({
-    themes: [githubDarkDimed],
-    langs: [js],
-    loadWasm: getWasm,
-  });
+  const transformedSnippets = await Promise.all(
+    snippets.map(async (snippet) => {
+      const truncatedCode = snippet.code.split("\n").slice(0, 20).join("\n");
 
-  const transformedSnippets = snippets.map((snippet) => {
-    const truncatedCode = snippet.code.split("\n").slice(0, 20).join("\n");
+      const codeHtml = await getHighlightCode(
+        truncatedCode,
+        context.cloudflare.env.HIGHLIGHT_API_URL
+      );
 
-    return {
-      ...snippet,
-      code: truncatedCode,
-      codeHtml: highlighter.codeToHtml(truncatedCode, {
-        lang: snippet.language,
-        theme: "github-dark-dimmed",
-      }),
-      viewCount: 0, // TODO: Implement view count
-      likeCount: 0, // TODO: Implement like count
-      commentCount: 0, // TODO: Implement comment count
-      postedAt: format(new Date(snippet.postedAt), "MMM D, YYYY", "en"),
-    };
-  });
+      return {
+        ...snippet,
+        code: truncatedCode,
+        codeHtml,
+        viewCount: 0, // TODO: Implement view count
+        likeCount: 0, // TODO: Implement like count
+        commentCount: 0, // TODO: Implement comment count
+        postedAt: format(new Date(snippet.postedAt), "MMM D, YYYY", "en"),
+      };
+    })
+  );
 
   return json({
     snippets: transformedSnippets,

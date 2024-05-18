@@ -5,10 +5,7 @@ import { css, cx } from "styled-system/css";
 import invariant from "tiny-invariant";
 import { Container } from "~/components/container";
 import { getGraphqlClient } from "~/graphql-client";
-import { getHighlighterCore } from "shiki/core";
-import githubDarkDimed from "shiki/themes/github-dark-dimmed.mjs";
-import js from "shiki/langs/javascript.mjs";
-import getWasm from "shiki/wasm";
+import { getHighlightCode } from "~/api/highlight";
 
 export const loader = async ({ params, context }: LoaderFunctionArgs) => {
   invariant(params.user, `params.user is required`);
@@ -20,18 +17,14 @@ export const loader = async ({ params, context }: LoaderFunctionArgs) => {
     id: params.snippet,
   });
 
-  const highlighter = await getHighlighterCore({
-    themes: [githubDarkDimed],
-    langs: [js],
-    loadWasm: getWasm,
-  });
+  const codeHtml = await getHighlightCode(
+    snippet.code,
+    context.cloudflare.env.HIGHLIGHT_API_URL
+  );
 
   const transformedSnippet = {
     ...snippet,
-    codeHtml: highlighter.codeToHtml(snippet.code, {
-      lang: snippet.language,
-      theme: "github-dark-dimmed",
-    }),
+    codeHtml,
     postedAt: format(new Date(snippet.postedAt), "MMM D, YYYY", "en"),
   };
 

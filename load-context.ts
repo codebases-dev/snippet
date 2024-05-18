@@ -8,6 +8,7 @@ import { type PlatformProxy } from "wrangler";
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface Env {
   API_URL: string;
+  HIGHLIGHT_API_URL: string;
   snippet_cache: KVNamespace;
 }
 
