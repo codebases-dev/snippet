@@ -5,7 +5,7 @@ import {
 } from "@remix-run/cloudflare";
 import { useLoaderData } from "@remix-run/react";
 import { css } from "styled-system/css";
-import { Card, generateCardStyleHtml } from "~/components/card";
+import { Card, generateGridStyleHtml } from "~/components/card";
 import { getGraphqlClient } from "~/graphql-client";
 import { format } from "@formkit/tempo";
 import { Container } from "~/components/container";
@@ -49,16 +49,16 @@ export async function loader({ context }: LoaderFunctionArgs) {
 
   return json({
     snippets: transformedSnippets,
-    cardStyleHtml: generateCardStyleHtml(transformedSnippets),
+    gridStyleHtml: generateGridStyleHtml(transformedSnippets, "grid-container"),
   });
 }
 
 export default function Index() {
-  const { snippets, cardStyleHtml } = useLoaderData<typeof loader>();
+  const { snippets, gridStyleHtml } = useLoaderData<typeof loader>();
 
   return (
     <Container>
-      <div dangerouslySetInnerHTML={{ __html: cardStyleHtml }} />
+      <div dangerouslySetInnerHTML={{ __html: gridStyleHtml }} />
       <div
         className={css({
           display: "flex",
@@ -69,18 +69,18 @@ export default function Index() {
           gap: "1rem",
         })}
       >
-        <ul className="card-list">
+        <div className="grid-container">
           {snippets.map((snippet) => (
-            <li
+            <div
               key={snippet.id}
               style={{
                 gridArea: `item${snippet.id}`,
               }}
             >
               <Card snippet={snippet} />
-            </li>
+            </div>
           ))}
-        </ul>
+        </div>
       </div>
     </Container>
   );
