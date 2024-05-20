@@ -44,6 +44,7 @@ export default function SnippetPage() {
     <Container
       className={css({
         maxWidth: "50rem",
+        lineHeight: 1.5,
       })}
     >
       <div
@@ -52,7 +53,6 @@ export default function SnippetPage() {
           flexDirection: "column",
           padding: "1.5rem",
           borderRadius: "md",
-          lineHeight: 1,
           boxShadow: "0 0 0 1px token(colors.gray.200) inset",
           gap: "1rem",
           background: "white",
@@ -62,8 +62,9 @@ export default function SnippetPage() {
           className={css({
             display: "flex",
             alignItems: "center",
-            gap: "0.25rem",
+            gap: "0.375rem",
             width: "100%",
+            height: "3rem",
           })}
         >
           {snippet.user.imageUrl && (
@@ -84,8 +85,6 @@ export default function SnippetPage() {
             className={css({
               display: "flex",
               flexDirection: "column",
-              gap: "0.375rem",
-              lineHeight: 1,
               overflow: "hidden",
             })}
           >
@@ -126,7 +125,6 @@ export default function SnippetPage() {
           className={css({
             fontSize: "3xl",
             fontWeight: "extrabold",
-            lineHeight: 1.25,
             color: "gray.800",
           })}
         >

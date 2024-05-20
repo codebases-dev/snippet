@@ -19,7 +19,6 @@ export function Card({ snippet }: CardProps) {
         flexDirection: "column",
         padding: "1rem",
         borderRadius: "md",
-        lineHeight: 1,
         boxShadow: "0 0 0 1px token(colors.gray.200) inset",
         gap: "1rem",
         background: "white",
@@ -31,6 +30,7 @@ export function Card({ snippet }: CardProps) {
           alignItems: "center",
           gap: "0.25rem",
           width: "100%",
+          height: "2.25rem",
         })}
       >
         {snippet.user.imageUrl && (
@@ -51,8 +51,7 @@ export function Card({ snippet }: CardProps) {
           className={css({
             display: "flex",
             flexDirection: "column",
-            gap: "0.25rem",
-            lineHeight: 1,
+            lineHeight: 1.25,
             overflow: "hidden",
           })}
         >
@@ -93,7 +92,7 @@ export function Card({ snippet }: CardProps) {
         <h2
           className={css({
             marginY: "-0.125rem",
-            fontSize: "1.25rem",
+            fontSize: "xl",
             fontWeight: "bold",
             lineHeight: "1.5rem",
             color: "gray.800",
