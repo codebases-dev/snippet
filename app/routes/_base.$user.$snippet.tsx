@@ -17,14 +17,14 @@ export const loader = async ({ params, context }: LoaderFunctionArgs) => {
     id: params.snippet,
   });
 
-  const codeHtml = await getHighlightCode(
+  const highlighted = await getHighlightCode(
     snippet.code,
     context.cloudflare.env.HIGHLIGHT_API_URL
   );
 
   const transformedSnippet = {
     ...snippet,
-    codeHtml,
+    codeHtml: highlighted.html,
     postedAt: format(new Date(snippet.postedAt), "MMM D, YYYY", "en"),
   };
 
