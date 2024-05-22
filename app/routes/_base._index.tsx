@@ -9,7 +9,7 @@ import { Card, generateGridStyleHtml } from "~/components/card";
 import { getGraphqlClient } from "~/graphql-client";
 import { format } from "@formkit/tempo";
 import { Container } from "~/components/container";
-import { getHighlightCodes } from "~/api/highlight";
+import { getHighlightCode } from "~/api/highlight";
 
 export const meta: MetaFunction = () => {
   return [
@@ -26,23 +26,18 @@ export async function loader({ context }: LoaderFunctionArgs) {
 
   const { snippets } = await client.GetSnippets();
 
-  const truncatedSnippets = snippets.map((snippet) => ({
-    ...snippet,
-    truncatedCode: snippet.code.split("\n").slice(0, 20).join("\n"),
-  }));
-
-  const highlightedSnippets = await getHighlightCodes(
-    truncatedSnippets.map((snippet) => snippet.code),
-    context.cloudflare.env.HIGHLIGHT_API_URL
-  );
-  highlightedSnippets.sort((a, b) => a.index - b.index);
-
   const transformedSnippets = await Promise.all(
-    truncatedSnippets.map(async (snippet, index) => {
+    snippets.map(async (snippet) => {
+      const truncatedCode = snippet.code.split("\n").slice(0, 20).join("\n");
+      const highlightedCode = await getHighlightCode(
+        truncatedCode,
+        context.cloudflare.env.HIGHLIGHT_API_URL
+      );
+
       return {
         ...snippet,
-        code: snippet.truncatedCode,
-        codeHtml: highlightedSnippets[index].html,
+        code: truncatedCode,
+        codeHtml: highlightedCode.html,
         viewCount: 0, // TODO: Implement view count
         likeCount: 0, // TODO: Implement like count
         commentCount: 0, // TODO: Implement comment count
