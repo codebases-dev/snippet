@@ -74,7 +74,6 @@ export default function New() {
     >
       <Link
         to="/"
-        prefetch="intent"
         className={css({
           color: "blue.900",
           textDecoration: "underline",

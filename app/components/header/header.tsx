@@ -29,7 +29,6 @@ export function Header() {
       <div>
         <Link
           to="/"
-          prefetch="intent"
           className={css({
             fontWeight: "extrabold",
           })}
@@ -58,7 +57,7 @@ export function Header() {
               gap: "1rem",
             })}
           >
-            <Link to="/new" prefetch="intent">
+            <Link to="/new">
               <button
                 className={css({
                   paddingX: "0.75rem",

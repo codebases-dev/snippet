@@ -88,7 +88,7 @@ export function Card({ snippet }: CardProps) {
           </div>
         </div>
       </div>
-      <Link to={`/${snippet.user.username}/${snippet.id}`} prefetch="intent">
+      <Link to={`/${snippet.user.username}/${snippet.id}`}>
         <h2
           className={css({
             marginY: "-0.125rem",
