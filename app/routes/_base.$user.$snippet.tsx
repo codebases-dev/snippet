@@ -5,7 +5,6 @@ import { css, cx } from "styled-system/css";
 import invariant from "tiny-invariant";
 import { Container } from "~/components/container";
 import { getGraphqlClient } from "~/graphql-client";
-import { getHighlightCode } from "~/api/highlight";
 
 export const loader = async ({ params, context }: LoaderFunctionArgs) => {
   invariant(params.user, `params.user is required`);
@@ -17,14 +16,8 @@ export const loader = async ({ params, context }: LoaderFunctionArgs) => {
     id: params.snippet,
   });
 
-  const highlighted = await getHighlightCode(
-    snippet.code,
-    context.cloudflare.env.HIGHLIGHT_API_URL
-  );
-
   const transformedSnippet = {
     ...snippet,
-    codeHtml: highlighted.html,
     postedAt: format(new Date(snippet.postedAt), "MMM D, YYYY", "en"),
   };
 
@@ -36,8 +29,8 @@ export const loader = async ({ params, context }: LoaderFunctionArgs) => {
 export default function SnippetPage() {
   const { snippet } = useLoaderData<typeof loader>();
 
-  if (!snippet.codeHtml) {
-    throw new Error("post.codeHtml is required");
+  if (!snippet.highlightedCodeHtml) {
+    throw new Error("snippet.highlightedCodeHtml is required");
   }
 
   return (
@@ -131,7 +124,7 @@ export default function SnippetPage() {
           {snippet.title}
         </h2>
         <div
-          dangerouslySetInnerHTML={{ __html: snippet.codeHtml }}
+          dangerouslySetInnerHTML={{ __html: snippet.highlightedCodeHtml }}
           className={cx(
             css({
               borderRadius: "0.5rem",

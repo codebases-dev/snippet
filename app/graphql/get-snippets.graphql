@@ -1,6 +1,7 @@
 query GetSnippets {
   snippets {
     code
+    highlightedCodeHtml
     id
     language
     postedAt

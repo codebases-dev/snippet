@@ -8,8 +8,8 @@ interface CardProps {
 }
 
 export function Card({ snippet }: CardProps) {
-  if (!snippet.codeHtml) {
-    throw new Error("post.codeHtml is required");
+  if (!snippet.highlightedCodeHtml) {
+    throw new Error("snippet.highlightedCodeHtml is required");
   }
 
   return (
@@ -109,7 +109,7 @@ export function Card({ snippet }: CardProps) {
         </h2>
       </Link>
       <div
-        dangerouslySetInnerHTML={{ __html: snippet.codeHtml }}
+        dangerouslySetInnerHTML={{ __html: snippet.highlightedCodeHtml }}
         className={cx(
           css({
             borderRadius: "0.5rem",

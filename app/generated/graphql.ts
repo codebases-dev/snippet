@@ -17,12 +17,24 @@ export type Scalars = {
   Float: { input: number; output: number; }
 };
 
+export type HighlightedSnippet = {
+  __typename?: 'HighlightedSnippet';
+  code: Scalars['String']['output'];
+  highlightedCodeHtml?: Maybe<Scalars['String']['output']>;
+  id: Scalars['String']['output'];
+  language: Scalars['String']['output'];
+  postedAt: Scalars['String']['output'];
+  title: Scalars['String']['output'];
+  user: User;
+  userId: Scalars['String']['output'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   /** Create a snippet */
-  createSnippet: Snippet;
+  createSnippet: HighlightedSnippet;
   /** Delete a snippet */
-  deleteSnippet: Snippet;
+  deleteSnippet: HighlightedSnippet;
 };
 
 
@@ -41,25 +53,14 @@ export type MutationDeleteSnippetArgs = {
 export type Query = {
   __typename?: 'Query';
   /** Get a snippet by ID */
-  snippet: Snippet;
+  snippet: HighlightedSnippet;
   /** Get list of snippets */
-  snippets: Array<Snippet>;
+  snippets: Array<HighlightedSnippet>;
 };
 
 
 export type QuerySnippetArgs = {
   id?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type Snippet = {
-  __typename?: 'Snippet';
-  code: Scalars['String']['output'];
-  id: Scalars['String']['output'];
-  language: Scalars['String']['output'];
-  postedAt: Scalars['String']['output'];
-  title: Scalars['String']['output'];
-  user: User;
-  userId: Scalars['String']['output'];
 };
 
 export type User = {
@@ -78,19 +79,19 @@ export type CreateSnippetMutationVariables = Exact<{
 }>;
 
 
-export type CreateSnippetMutation = { __typename?: 'Mutation', createSnippet: { __typename?: 'Snippet', code: string, id: string, language: string, postedAt: string, title: string, userId: string } };
+export type CreateSnippetMutation = { __typename?: 'Mutation', createSnippet: { __typename?: 'HighlightedSnippet', code: string, id: string, language: string, postedAt: string, title: string, userId: string } };
 
 export type GetSnippetQueryVariables = Exact<{
   id: Scalars['String']['input'];
 }>;
 
 
-export type GetSnippetQuery = { __typename?: 'Query', snippet: { __typename?: 'Snippet', code: string, id: string, language: string, postedAt: string, title: string, userId: string, user: { __typename?: 'User', displayName: string, id: string, imageUrl: string, username: string } } };
+export type GetSnippetQuery = { __typename?: 'Query', snippet: { __typename?: 'HighlightedSnippet', code: string, highlightedCodeHtml?: string | null, id: string, language: string, postedAt: string, title: string, userId: string, user: { __typename?: 'User', displayName: string, id: string, imageUrl: string, username: string } } };
 
 export type GetSnippetsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetSnippetsQuery = { __typename?: 'Query', snippets: Array<{ __typename?: 'Snippet', code: string, id: string, language: string, postedAt: string, title: string, userId: string, user: { __typename?: 'User', displayName: string, id: string, imageUrl: string, username: string } }> };
+export type GetSnippetsQuery = { __typename?: 'Query', snippets: Array<{ __typename?: 'HighlightedSnippet', code: string, highlightedCodeHtml?: string | null, id: string, language: string, postedAt: string, title: string, userId: string, user: { __typename?: 'User', displayName: string, id: string, imageUrl: string, username: string } }> };
 
 
 export const CreateSnippetDocument = gql`
@@ -109,6 +110,7 @@ export const GetSnippetDocument = gql`
     query GetSnippet($id: String!) {
   snippet(id: $id) {
     code
+    highlightedCodeHtml
     id
     language
     postedAt
@@ -127,6 +129,7 @@ export const GetSnippetsDocument = gql`
     query GetSnippets {
   snippets {
     code
+    highlightedCodeHtml
     id
     language
     postedAt

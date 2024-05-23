@@ -2,7 +2,7 @@ export interface Snippet {
   id: string;
   title: string;
   code: string;
-  codeHtml?: string;
+  highlightedCodeHtml?: string;
   language: string;
   viewCount: number;
   likeCount: number;

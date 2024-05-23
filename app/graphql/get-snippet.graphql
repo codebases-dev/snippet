@@ -1,6 +1,7 @@
 query GetSnippet($id: String!) {
   snippet(id: $id) {
     code
+    highlightedCodeHtml
     id
     language
     postedAt
