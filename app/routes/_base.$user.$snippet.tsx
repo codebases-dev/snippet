@@ -57,7 +57,8 @@ export default function SnippetPage() {
             alignItems: "center",
             gap: "0.375rem",
             width: "100%",
-            height: "3rem",
+            height: "2.75rem",
+            lineHeight: 1.25,
           })}
         >
           {snippet.user.imageUrl && (
@@ -65,8 +66,8 @@ export default function SnippetPage() {
               src={snippet.user.imageUrl}
               alt=""
               className={css({
-                width: "3rem",
-                height: "3rem",
+                width: "2.75rem",
+                height: "2.75rem",
                 borderRadius: "full",
                 border: "1px solid",
                 borderColor: "gray.200",
@@ -99,7 +100,7 @@ export default function SnippetPage() {
             </div>
             <div
               className={css({
-                fontSize: "xs",
+                fontSize: "sm",
                 color: "gray.600",
                 overflow: "hidden",
                 textOverflow: "ellipsis",
