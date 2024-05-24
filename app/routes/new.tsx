@@ -6,6 +6,10 @@ import { getGraphqlClient } from "~/graphql-client";
 import { getFormProps, useForm } from "@conform-to/react";
 import { parseWithValibot } from "conform-to-valibot";
 import * as v from "valibot";
+import { ChevronLeftIcon } from "lucide-react";
+import { Input } from "~/components/inputs/input";
+import { Textarea } from "~/components/inputs/textarea";
+import { Select } from "~/components/inputs/select";
 
 const formSchema = v.object({
   title: v.string("Title is required"),
@@ -69,77 +73,81 @@ export default function New() {
   return (
     <div
       className={css({
-        padding: "1rem",
+        background: "gray.50",
+        minHeight: "100vh",
       })}
     >
-      <Link
-        to="/"
+      <div
         className={css({
-          color: "blue.900",
-          textDecoration: "underline",
+          maxWidth: "36rem",
+          marginX: "auto",
+          padding: "1rem",
         })}
       >
-        Back to home
-      </Link>
-      <Form method="post" {...getFormProps(form)}>
-        <div>
-          <label htmlFor="title">Title</label>
-          <input type="text" name="title" />
-          {title.errors && (
-            <div>
-              {title.errors.map((e, index) => (
-                <p key={index} className={css({ color: "red.500" })}>
-                  {e}
-                </p>
-              ))}
-            </div>
-          )}
-        </div>
-        <div>
-          <label htmlFor="language">Language</label>
-          <select name="language">
-            <option value="javascript">JavaScript</option>
-          </select>
-          {language.errors && (
-            <div>
-              {language.errors.map((e, index) => (
-                <p key={index} className={css({ color: "red.500" })}>
-                  {e}
-                </p>
-              ))}
-            </div>
-          )}
-        </div>
-        <div>
-          <label htmlFor="code">Content</label>
-          <textarea name="code"></textarea>
-          {code.errors && (
-            <div>
-              {code.errors.map((e, index) => (
-                <p key={index} className={css({ color: "red.500" })}>
-                  {e}
-                </p>
-              ))}
-            </div>
-          )}
-        </div>
-        <button
-          type="submit"
+        <Link
+          to="/"
           className={css({
-            paddingX: "0.75rem",
-            height: "2.125rem",
-            borderRadius: "md",
-            backgroundColor: { base: "black", _hover: "gray.800" },
-            color: "white",
+            color: "gray.600",
             fontSize: "sm",
-            lineHeight: 1,
             fontWeight: "semibold",
-            cursor: "pointer",
+            display: "flex",
+            alignItems: "center",
+            "&:hover": {
+              color: "gray.800",
+            },
           })}
         >
-          Create
-        </button>
-      </Form>
+          <ChevronLeftIcon size={16} />
+          Go Back
+        </Link>
+        <Form
+          method="post"
+          {...getFormProps(form)}
+          className={css({
+            marginTop: "1rem",
+          })}
+        >
+          <div
+            className={css({
+              display: "flex",
+              flexDirection: "column",
+              gap: "1rem",
+            })}
+          >
+            <Input label="Title" name="title" errors={title.errors} />
+            <Select
+              name="language"
+              label="Language"
+              options={[
+                {
+                  value: "javascript",
+                  label: "JavaScript",
+                },
+              ]}
+              errors={language.errors}
+            />
+            <Textarea name="code" label="Code" errors={code.errors} rows={10} />
+          </div>
+          <button
+            type="submit"
+            className={css({
+              marginTop: "1rem",
+              paddingX: "0.75rem",
+              width: "100%",
+              height: "2.125rem",
+              borderRadius: "md",
+              backgroundColor: { base: "black", _hover: "gray.800" },
+              color: "white",
+              fontSize: "sm",
+              lineHeight: 1,
+              fontWeight: "semibold",
+              cursor: "pointer",
+            })}
+          >
+            Create
+          </button>
+        </Form>
+      </div>
     </div>
   );
 }
