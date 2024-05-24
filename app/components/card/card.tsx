@@ -118,7 +118,8 @@ export function Card({ snippet }: CardProps) {
             fontSize: "0.833rem",
             lineHeight: "1.5rem",
             "& pre": {
-              padding: "1rem",
+              paddingX: "1rem",
+              paddingY: "0.75rem",
             },
           })
         )}

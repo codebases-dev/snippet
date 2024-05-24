@@ -132,7 +132,8 @@ export default function SnippetPage() {
               boxSizing: "border-box",
               lineHeight: 1.75,
               "& pre": {
-                padding: "1rem",
+                paddingX: "1.25rem",
+                paddingY: "0.875rem",
               },
             })
           )}
