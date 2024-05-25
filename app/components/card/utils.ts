@@ -1,26 +1,26 @@
 import { Snippet } from "~/models/snippet.server";
 
-function calculateCardHeight(post: Snippet) {
-  const codeLineCount = calculateCodeLineCount(post.code);
-  return codeLineCount * 1.5 + 11.5;
+function calculateCardHeight(snippet: Snippet) {
+  const codeLineCount = calculateCodeLineCount(snippet.code);
+  return codeLineCount * 1.5 + 9;
 }
 
 function divideItemsIntoColumns(
-  posts: Snippet[],
+  snippets: Snippet[],
   columnCount: number
 ): Snippet[][] {
   const columns = Array.from({ length: columnCount }, (): Snippet[] => []);
 
-  posts.forEach((post, index) => {
+  snippets.forEach((snippet, index) => {
     const columnIndex = index % columnCount;
-    columns[columnIndex].push(post);
+    columns[columnIndex].push(snippet);
   });
 
   return columns;
 }
 
-function generateGridTemplateAreas(posts: Snippet[], columnCount: number) {
-  const dividedColumns = divideItemsIntoColumns(posts, columnCount);
+function generateGridTemplateAreas(snippets: Snippet[], columnCount: number) {
+  const dividedColumns = divideItemsIntoColumns(snippets, columnCount);
 
   const gridTemplateAreaBlocks = dividedColumns.map((columnItems) => {
     return columnItems.reduce((acc, item) => {

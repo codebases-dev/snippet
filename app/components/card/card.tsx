@@ -1,5 +1,4 @@
 import { css, cx } from "styled-system/css";
-import { EyeIcon, HeartIcon, MessageCircleMoreIcon } from "lucide-react";
 import { Snippet } from "~/models/snippet.server";
 import { Link } from "@remix-run/react";
 
@@ -28,7 +27,6 @@ export function Card({ snippet }: CardProps) {
         className={css({
           display: "flex",
           alignItems: "center",
-          gap: "0.25rem",
           width: "100%",
           height: "2.25rem",
         })}
@@ -51,7 +49,7 @@ export function Card({ snippet }: CardProps) {
           className={css({
             display: "flex",
             flexDirection: "column",
-            lineHeight: 1.25,
+            lineHeight: 1.375,
             overflow: "hidden",
           })}
         >
@@ -60,6 +58,7 @@ export function Card({ snippet }: CardProps) {
               fontSize: "sm",
               fontWeight: "semibold",
               color: "gray.800",
+              paddingLeft: "0.25rem",
               overflow: "hidden",
               textOverflow: "ellipsis",
               whiteSpace: "nowrap",
@@ -75,16 +74,13 @@ export function Card({ snippet }: CardProps) {
             className={css({
               fontSize: "xs",
               color: "gray.600",
+              paddingLeft: "0.25rem",
               overflow: "hidden",
               textOverflow: "ellipsis",
               whiteSpace: "nowrap",
-              cursor: "pointer",
-              _hover: {
-                textDecoration: "underline",
-              },
             })}
           >
-            @{snippet.user.username}
+            {snippet.postedAt}
           </div>
         </div>
       </div>
@@ -124,53 +120,6 @@ export function Card({ snippet }: CardProps) {
           })
         )}
       />
-      <div
-        className={css({
-          display: "flex",
-          alignItems: "center",
-          color: "gray.600",
-          gap: "1rem",
-          fontSize: "0.7125rem",
-        })}
-      >
-        <div
-          className={css({
-            display: "flex",
-            alignItems: "center",
-            gap: "0.125rem",
-          })}
-        >
-          <EyeIcon size={16} strokeWidth={1.25} />
-          <div>{snippet.viewCount}</div>
-        </div>
-        <div
-          className={css({
-            display: "flex",
-            alignItems: "center",
-            gap: "0.125rem",
-          })}
-        >
-          <HeartIcon size={16} strokeWidth={1.25} />
-          <div>{snippet.likeCount}</div>
-        </div>
-        <div
-          className={css({
-            display: "flex",
-            alignItems: "center",
-            gap: "0.125rem",
-          })}
-        >
-          <MessageCircleMoreIcon size={16} strokeWidth={1.25} />
-          <div>{snippet.commentCount}</div>
-        </div>
-        <div
-          className={css({
-            marginLeft: "auto",
-          })}
-        >
-          {snippet.postedAt}
-        </div>
-      </div>
     </div>
   );
 }

@@ -55,10 +55,9 @@ export default function SnippetPage() {
           className={css({
             display: "flex",
             alignItems: "center",
-            gap: "0.375rem",
             width: "100%",
             height: "2.75rem",
-            lineHeight: 1.25,
+            lineHeight: 1.5,
           })}
         >
           {snippet.user.imageUrl && (
@@ -85,8 +84,9 @@ export default function SnippetPage() {
             <div
               className={css({
                 fontSize: "md",
-                fontWeight: "bold",
+                fontWeight: "semibold",
                 color: "gray.800",
+                paddingLeft: "0.375rem",
                 overflow: "hidden",
                 textOverflow: "ellipsis",
                 whiteSpace: "nowrap",
@@ -100,18 +100,15 @@ export default function SnippetPage() {
             </div>
             <div
               className={css({
-                fontSize: "sm",
+                fontSize: "xs",
                 color: "gray.600",
+                paddingLeft: "0.375rem",
                 overflow: "hidden",
                 textOverflow: "ellipsis",
                 whiteSpace: "nowrap",
-                cursor: "pointer",
-                _hover: {
-                  textDecoration: "underline",
-                },
               })}
             >
-              @{snippet.user.username}
+              Posted on {snippet.postedAt}
             </div>
           </div>
         </div>
