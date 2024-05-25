@@ -30,9 +30,6 @@ export async function loader({ context }: LoaderFunctionArgs) {
       ...snippet,
       code: snippet.code,
       highlightedCodeHtml: snippet.highlightedCodeHtml ?? undefined,
-      viewCount: 0, // TODO: Implement view count
-      likeCount: 0, // TODO: Implement like count
-      commentCount: 0, // TODO: Implement comment count
       postedAt: format(new Date(snippet.postedAt), "MMM D, YYYY", "en"),
     };
   });
