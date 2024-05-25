@@ -79,32 +79,49 @@ export default function New() {
     >
       <div
         className={css({
+          display: "flex",
+          alignItems: "center",
           maxWidth: "36rem",
           marginX: "auto",
-          padding: "1rem",
+          paddingX: "2rem",
+          height: "4rem",
         })}
       >
         <Link
           to="/"
           className={css({
-            color: "gray.600",
+            position: "relative",
+            color: "gray.500",
             fontSize: "sm",
             fontWeight: "semibold",
             display: "flex",
             alignItems: "center",
             "&:hover": {
-              color: "gray.800",
+              color: "gray.600",
             },
           })}
         >
-          <ChevronLeftIcon size={16} />
+          <ChevronLeftIcon
+            size={16}
+            className={css({
+              position: "absolute",
+              transform: "translateY(0.0625rem) translateX(-1rem)",
+            })}
+          />
           Go Back
         </Link>
+      </div>
+      <div
+        className={css({
+          maxWidth: "36rem",
+          marginX: "auto",
+          paddingX: "2rem",
+        })}
+      >
         <Form
           method="post"
           {...getFormProps(form)}
           className={css({
-            marginTop: "1rem",
             display: "flex",
             flexDirection: "column",
             gap: "1rem",

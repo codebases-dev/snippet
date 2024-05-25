@@ -58,6 +58,7 @@ export function Select({
                   _focus: "0 0 0 1px token(colors.blue.600)",
                   _invalid: { _focus: "0 0 0 1px token(colors.red.500)" },
                 },
+                cursor: { _valid: "pointer" },
                 appearance: "none",
               }),
               className
