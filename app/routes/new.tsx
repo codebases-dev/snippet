@@ -105,35 +105,28 @@ export default function New() {
           {...getFormProps(form)}
           className={css({
             marginTop: "1rem",
+            display: "flex",
+            flexDirection: "column",
+            gap: "1rem",
           })}
         >
-          <div
-            className={css({
-              display: "flex",
-              flexDirection: "column",
-              gap: "1rem",
-            })}
-          >
-            <Input label="Title" name="title" errors={title.errors} />
-            <Select
-              name="language"
-              label="Language"
-              options={[
-                {
-                  value: "javascript",
-                  label: "JavaScript",
-                },
-              ]}
-              errors={language.errors}
-            />
-            <Textarea name="code" label="Code" errors={code.errors} rows={10} />
-          </div>
+          <Input label="Title" name="title" errors={title.errors} />
+          <Select
+            name="language"
+            label="Language"
+            options={[
+              {
+                value: "javascript",
+                label: "JavaScript",
+              },
+            ]}
+            errors={language.errors}
+          />
+          <Textarea name="code" label="Code" errors={code.errors} rows={10} />
           <button
             type="submit"
             className={css({
-              marginTop: "1rem",
               paddingX: "0.75rem",
-              width: "100%",
               height: "2.125rem",
               borderRadius: "md",
               backgroundColor: { base: "black", _hover: "gray.800" },
