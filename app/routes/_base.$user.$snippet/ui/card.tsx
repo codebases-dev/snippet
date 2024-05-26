@@ -1,8 +1,7 @@
 import { css, cx } from "styled-system/css";
 import { Snippet } from "~/models/snippet.server";
-import { Link } from "@remix-run/react";
 
-interface CardProps {
+export interface CardProps {
   snippet: Snippet;
 }
 
@@ -16,11 +15,12 @@ export function Card({ snippet }: CardProps) {
       className={css({
         display: "flex",
         flexDirection: "column",
-        padding: "1rem",
+        padding: "1.5rem",
         borderRadius: "md",
         boxShadow: "0 0 0 1px token(colors.gray.200) inset",
         gap: "1rem",
         background: "white",
+        lineHeight: 1.5,
       })}
     >
       <div
@@ -28,7 +28,7 @@ export function Card({ snippet }: CardProps) {
           display: "flex",
           alignItems: "center",
           width: "100%",
-          height: "2.25rem",
+          height: "2.75rem",
         })}
       >
         {snippet.user.imageUrl && (
@@ -36,8 +36,8 @@ export function Card({ snippet }: CardProps) {
             src={snippet.user.imageUrl}
             alt=""
             className={css({
-              width: "2.25rem",
-              height: "2.25rem",
+              width: "2.75rem",
+              height: "2.75rem",
               borderRadius: "full",
               border: "1px solid",
               borderColor: "gray.200",
@@ -49,16 +49,15 @@ export function Card({ snippet }: CardProps) {
           className={css({
             display: "flex",
             flexDirection: "column",
-            lineHeight: 1.375,
             overflow: "hidden",
           })}
         >
           <div
             className={css({
-              fontSize: "sm",
+              fontSize: "md",
               fontWeight: "semibold",
               color: "gray.800",
-              paddingLeft: "0.25rem",
+              paddingLeft: "0.375rem",
               overflow: "hidden",
               textOverflow: "ellipsis",
               whiteSpace: "nowrap",
@@ -72,38 +71,27 @@ export function Card({ snippet }: CardProps) {
           </div>
           <div
             className={css({
-              fontSize: "0.6875rem",
+              fontSize: "xs",
               color: "gray.600",
-              paddingLeft: "0.25rem",
+              paddingLeft: "0.375rem",
               overflow: "hidden",
               textOverflow: "ellipsis",
               whiteSpace: "nowrap",
             })}
           >
-            {snippet.postedAt}
+            Posted on {snippet.postedAt}
           </div>
         </div>
       </div>
-      <Link to={`/${snippet.user.username}/${snippet.id}`}>
-        <h2
-          className={css({
-            marginY: "-0.125rem",
-            fontSize: "xl",
-            fontWeight: "bold",
-            lineHeight: "1.5rem",
-            color: "gray.800",
-            overflow: "hidden",
-            textOverflow: "ellipsis",
-            whiteSpace: "nowrap",
-            cursor: "pointer",
-            _hover: {
-              opacity: 0.75,
-            },
-          })}
-        >
-          {snippet.title}
-        </h2>
-      </Link>
+      <h2
+        className={css({
+          fontSize: "3xl",
+          fontWeight: "extrabold",
+          color: "gray.800",
+        })}
+      >
+        {snippet.title}
+      </h2>
       <div
         dangerouslySetInnerHTML={{ __html: snippet.highlightedCodeHtml }}
         className={cx(
@@ -111,11 +99,10 @@ export function Card({ snippet }: CardProps) {
             borderRadius: "0.5rem",
             overflow: "hidden",
             boxSizing: "border-box",
-            fontSize: "0.833rem",
-            lineHeight: "1.5rem",
+            lineHeight: 1.75,
             "& pre": {
-              paddingX: "1rem",
-              paddingY: "0.75rem",
+              paddingX: "1.25rem",
+              paddingY: "0.875rem",
             },
           })
         )}

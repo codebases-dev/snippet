@@ -9,7 +9,7 @@ export default defineConfig({
   // Where to look for your css declarations
   include: [
     "./app/routes/**/*.{ts,tsx,js,jsx}",
-    "./app/components/**/*.{ts,tsx,js,jsx}",
+    "./app/shared/**/*.{ts,tsx,js,jsx}",
   ],
 
   // Files to exclude

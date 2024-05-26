@@ -6,7 +6,7 @@ export interface TextAreaProps
   errors?: string[];
 }
 
-export function Textarea({
+export function TextArea({
   className,
   label,
   errors,

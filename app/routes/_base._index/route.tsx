@@ -5,10 +5,11 @@ import {
 } from "@remix-run/cloudflare";
 import { useLoaderData } from "@remix-run/react";
 import { css } from "styled-system/css";
-import { Card, generateGridStyleHtml } from "~/components/card";
 import { getGraphqlClient } from "~/graphql-client";
 import { format } from "@formkit/tempo";
-import { Container } from "~/components/container";
+import { Container } from "~/shared/ui/container";
+import { Card } from "./ui/card";
+import { generateGridStyle } from "./lib/generate-grid-style";
 
 export const meta: MetaFunction = () => {
   return [
@@ -28,23 +29,22 @@ export async function loader({ context }: LoaderFunctionArgs) {
   const transformedSnippets = snippets.map((snippet) => {
     return {
       ...snippet,
-      code: snippet.code,
       highlightedCodeHtml: snippet.highlightedCodeHtml ?? undefined,
       postedAt: format(new Date(snippet.postedAt), "MMM D, YYYY", "en"),
     };
   });
   return json({
     snippets: transformedSnippets,
-    gridStyleHtml: generateGridStyleHtml(transformedSnippets, "grid-container"),
+    gridStyle: generateGridStyle(transformedSnippets, "grid-container"),
   });
 }
 
 export default function Index() {
-  const { snippets, gridStyleHtml } = useLoaderData<typeof loader>();
+  const { snippets, gridStyle } = useLoaderData<typeof loader>();
 
   return (
     <Container>
-      <div dangerouslySetInnerHTML={{ __html: gridStyleHtml }} />
+      <div dangerouslySetInnerHTML={{ __html: gridStyle }} />
       <div
         className={css({
           display: "flex",

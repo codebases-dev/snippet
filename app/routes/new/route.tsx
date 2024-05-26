@@ -7,10 +7,8 @@ import { getFormProps, useForm } from "@conform-to/react";
 import { parseWithValibot } from "conform-to-valibot";
 import * as v from "valibot";
 import { ChevronLeftIcon } from "lucide-react";
-import { Input } from "~/components/inputs/input";
-import { Textarea } from "~/components/inputs/textarea";
-import { Select } from "~/components/inputs/select";
-import { Button } from "~/components/button/button";
+import { Input, TextArea, Select } from "~/shared/ui/input";
+import { Button } from "~/shared/ui/button";
 
 const formSchema = v.object({
   title: v.string("Title is required"),
@@ -140,7 +138,7 @@ export default function New() {
             ]}
             errors={language.errors}
           />
-          <Textarea name="code" label="Code" errors={code.errors} rows={10} />
+          <TextArea name="code" label="Code" errors={code.errors} rows={10} />
           <Button type="submit">Create</Button>
         </Form>
       </div>

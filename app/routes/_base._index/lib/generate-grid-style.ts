@@ -58,7 +58,7 @@ function calculateCodeLineCount(code: string) {
     : code.split("\n").length;
 }
 
-export function generateGridStyleHtml(
+export function generateGridStyle(
   snippets: Snippet[],
   gridContainerClassName: string
 ) {

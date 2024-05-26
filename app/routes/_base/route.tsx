@@ -1,3 +1,5 @@
+import { Link, Outlet } from "@remix-run/react";
+import { css } from "styled-system/css";
 import {
   SignedIn,
   SignedOut,
@@ -5,11 +7,9 @@ import {
   SignUpButton,
   UserButton,
 } from "@clerk/remix";
-import { Link } from "@remix-run/react";
-import { css } from "styled-system/css";
-import { Button } from "../button/button";
+import { Button } from "~/shared/ui/button";
 
-export function Header() {
+function Header() {
   return (
     <header
       className={css({
@@ -82,5 +82,27 @@ export function Header() {
         </SignedOut>
       </div>
     </header>
+  );
+}
+
+export default function BaseLayout() {
+  return (
+    <div
+      style={{
+        fontFamily: "system-ui, sans-serif",
+        lineHeight: "1.8",
+      }}
+    >
+      <Header />
+      <main
+        className={css({
+          paddingTop: "4rem",
+          background: "gray.50",
+          minHeight: "100vh",
+        })}
+      >
+        <Outlet />
+      </main>
+    </div>
   );
 }
