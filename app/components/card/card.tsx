@@ -72,7 +72,7 @@ export function Card({ snippet }: CardProps) {
           </div>
           <div
             className={css({
-              fontSize: "xs",
+              fontSize: "0.6875rem",
               color: "gray.600",
               paddingLeft: "0.25rem",
               overflow: "hidden",
