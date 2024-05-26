@@ -7,6 +7,7 @@ import {
 } from "@clerk/remix";
 import { Link } from "@remix-run/react";
 import { css } from "styled-system/css";
+import { Button } from "../button/button";
 
 export function Header() {
   return (
@@ -57,23 +58,9 @@ export function Header() {
               gap: "1rem",
             })}
           >
-            <Link to="/new">
-              <button
-                className={css({
-                  paddingX: "0.75rem",
-                  height: "2.125rem",
-                  borderRadius: "md",
-                  backgroundColor: { base: "black", _hover: "gray.800" },
-                  color: "white",
-                  fontSize: "sm",
-                  lineHeight: 1,
-                  fontWeight: "semibold",
-                  cursor: "pointer",
-                })}
-              >
-                Create Snippet
-              </button>
-            </Link>
+            <Button asChild>
+              <Link to="/new">Create Snippet</Link>
+            </Button>
             <UserButton />
           </div>
         </SignedIn>
@@ -82,38 +69,14 @@ export function Header() {
             className={css({
               display: "flex",
               alignItems: "center",
-              columnGap: "1rem",
+              gap: "0.5rem",
             })}
           >
             <SignInButton mode="modal">
-              <button
-                className={css({
-                  fontSize: "sm",
-                  lineHeight: 1.25,
-                  fontWeight: "semibold",
-                  color: { base: "black", _hover: "gray.700" },
-                  cursor: "pointer",
-                })}
-              >
-                Sign in
-              </button>
+              <Button variant="transparent">Sign in</Button>
             </SignInButton>
             <SignUpButton mode="modal">
-              <button
-                className={css({
-                  paddingX: "0.75rem",
-                  height: "2.125rem",
-                  borderRadius: "md",
-                  backgroundColor: { base: "black", _hover: "gray.800" },
-                  color: "white",
-                  fontSize: "sm",
-                  lineHeight: 1,
-                  fontWeight: "semibold",
-                  cursor: "pointer",
-                })}
-              >
-                Sign up
-              </button>
+              <Button>Sign up</Button>
             </SignUpButton>
           </div>
         </SignedOut>

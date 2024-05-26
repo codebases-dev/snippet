@@ -10,6 +10,7 @@ import { ChevronLeftIcon } from "lucide-react";
 import { Input } from "~/components/inputs/input";
 import { Textarea } from "~/components/inputs/textarea";
 import { Select } from "~/components/inputs/select";
+import { Button } from "~/components/button/button";
 
 const formSchema = v.object({
   title: v.string("Title is required"),
@@ -140,22 +141,7 @@ export default function New() {
             errors={language.errors}
           />
           <Textarea name="code" label="Code" errors={code.errors} rows={10} />
-          <button
-            type="submit"
-            className={css({
-              paddingX: "0.75rem",
-              height: "2.125rem",
-              borderRadius: "md",
-              backgroundColor: { base: "black", _hover: "gray.800" },
-              color: "white",
-              fontSize: "sm",
-              lineHeight: 1,
-              fontWeight: "semibold",
-              cursor: "pointer",
-            })}
-          >
-            Create
-          </button>
+          <Button type="submit">Create</Button>
         </Form>
       </div>
     </div>
