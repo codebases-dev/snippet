@@ -1,5 +1,5 @@
 import { css, cx } from "styled-system/css";
-import { Snippet } from "~/models/snippet.server";
+import { Snippet } from "~/entities/snippet/model";
 
 export interface CardProps {
   snippet: Snippet;

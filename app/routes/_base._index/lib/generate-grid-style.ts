@@ -1,4 +1,4 @@
-import { Snippet } from "~/models/snippet.server";
+import { Snippet } from "~/entities/snippet/model";
 
 function calculateCardHeight(snippet: Snippet) {
   const codeLineCount = calculateCodeLineCount(snippet.code);
