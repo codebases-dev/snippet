@@ -2,11 +2,11 @@ import { css, cx } from "styled-system/css";
 import { Link } from "@remix-run/react";
 import { Snippet } from "~/entities/snippet/model";
 
-export interface CardProps {
+export interface SnippetCompactCardProps {
   snippet: Snippet;
 }
 
-export function Card({ snippet }: CardProps) {
+export function SnippetCompactCard({ snippet }: SnippetCompactCardProps) {
   if (!snippet.highlightedCodeHtml) {
     throw new Error("snippet.highlightedCodeHtml is required");
   }

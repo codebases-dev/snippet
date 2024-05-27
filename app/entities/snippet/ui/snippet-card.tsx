@@ -1,11 +1,11 @@
 import { css, cx } from "styled-system/css";
 import { Snippet } from "~/entities/snippet/model";
 
-export interface CardProps {
+export interface SnippetCardProps {
   snippet: Snippet;
 }
 
-export function Card({ snippet }: CardProps) {
+export function SnippetCard({ snippet }: SnippetCardProps) {
   if (!snippet.highlightedCodeHtml) {
     throw new Error("snippet.highlightedCodeHtml is required");
   }

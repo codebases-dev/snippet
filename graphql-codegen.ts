@@ -4,7 +4,7 @@ const config: CodegenConfig = {
   overwrite: true,
   schema:
     "https://raw.githubusercontent.com/codebases-dev/api/main/graphql/schema.graphql",
-  documents: "app/graphql/*.graphql",
+  documents: "app/**/*.graphql",
   generates: {
     "app/generated/graphql.ts": {
       plugins: [

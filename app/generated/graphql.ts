@@ -71,16 +71,6 @@ export type User = {
   username: Scalars['String']['output'];
 };
 
-export type CreateSnippetMutationVariables = Exact<{
-  userId: Scalars['String']['input'];
-  title: Scalars['String']['input'];
-  code: Scalars['String']['input'];
-  language: Scalars['String']['input'];
-}>;
-
-
-export type CreateSnippetMutation = { __typename?: 'Mutation', createSnippet: { __typename?: 'HighlightedSnippet', code: string, id: string, language: string, postedAt: string, title: string, userId: string } };
-
 export type GetSnippetQueryVariables = Exact<{
   id: Scalars['String']['input'];
 }>;
@@ -93,19 +83,17 @@ export type GetSnippetsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetSnippetsQuery = { __typename?: 'Query', snippets: Array<{ __typename?: 'HighlightedSnippet', code: string, highlightedCodeHtml?: string | null, id: string, language: string, postedAt: string, title: string, userId: string, user: { __typename?: 'User', displayName: string, id: string, imageUrl: string, username: string } }> };
 
+export type CreateSnippetMutationVariables = Exact<{
+  userId: Scalars['String']['input'];
+  title: Scalars['String']['input'];
+  code: Scalars['String']['input'];
+  language: Scalars['String']['input'];
+}>;
 
-export const CreateSnippetDocument = gql`
-    mutation CreateSnippet($userId: String!, $title: String!, $code: String!, $language: String!) {
-  createSnippet(userId: $userId, title: $title, code: $code, language: $language) {
-    code
-    id
-    language
-    postedAt
-    title
-    userId
-  }
-}
-    `;
+
+export type CreateSnippetMutation = { __typename?: 'Mutation', createSnippet: { __typename?: 'HighlightedSnippet', code: string, id: string, language: string, postedAt: string, title: string, userId: string } };
+
+
 export const GetSnippetDocument = gql`
     query GetSnippet($id: String!) {
   snippet(id: $id) {
@@ -144,6 +132,18 @@ export const GetSnippetsDocument = gql`
   }
 }
     `;
+export const CreateSnippetDocument = gql`
+    mutation CreateSnippet($userId: String!, $title: String!, $code: String!, $language: String!) {
+  createSnippet(userId: $userId, title: $title, code: $code, language: $language) {
+    code
+    id
+    language
+    postedAt
+    title
+    userId
+  }
+}
+    `;
 
 export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, string>) => Promise<T>, operationName: string, operationType?: string, variables?: any) => Promise<T>;
 
@@ -152,14 +152,14 @@ const defaultWrapper: SdkFunctionWrapper = (action, _operationName, _operationTy
 
 export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
   return {
-    CreateSnippet(variables: CreateSnippetMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<CreateSnippetMutation> {
-      return withWrapper((wrappedRequestHeaders) => client.request<CreateSnippetMutation>(CreateSnippetDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'CreateSnippet', 'mutation', variables);
-    },
     GetSnippet(variables: GetSnippetQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetSnippetQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetSnippetQuery>(GetSnippetDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetSnippet', 'query', variables);
     },
     GetSnippets(variables?: GetSnippetsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetSnippetsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetSnippetsQuery>(GetSnippetsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetSnippets', 'query', variables);
+    },
+    CreateSnippet(variables: CreateSnippetMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<CreateSnippetMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<CreateSnippetMutation>(CreateSnippetDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'CreateSnippet', 'mutation', variables);
     }
   };
 }

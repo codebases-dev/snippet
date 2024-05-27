@@ -1,20 +1,11 @@
 import { getAuth } from "@clerk/remix/ssr.server";
 import { ActionFunctionArgs, json, redirect } from "@remix-run/cloudflare";
-import { Form, Link, useActionData } from "@remix-run/react";
+import { Link, useActionData } from "@remix-run/react";
 import { css } from "styled-system/css";
 import { getGraphqlClient } from "~/graphql-client";
-import { getFormProps, useForm } from "@conform-to/react";
-import { parseWithValibot } from "conform-to-valibot";
-import * as v from "valibot";
 import { ChevronLeftIcon } from "lucide-react";
-import { Input, TextArea, Select } from "~/shared/ui/input";
-import { Button } from "~/shared/ui/button";
-
-const formSchema = v.object({
-  title: v.string("Title is required"),
-  language: v.picklist(["javascript"], "Invalid language"),
-  code: v.string("Content is required"),
-});
+import { SubmitSnippetForm } from "~/features/submit-snippet/ui";
+import { parseSubmitSnippetFormData } from "~/features/submit-snippet/schema";
 
 export async function action(args: ActionFunctionArgs) {
   const { request, context } = args;
@@ -25,9 +16,7 @@ export async function action(args: ActionFunctionArgs) {
   }
 
   const formData = await request.formData();
-  const submission = parseWithValibot(formData, {
-    schema: formSchema,
-  });
+  const submission = parseSubmitSnippetFormData(formData);
 
   if (submission.status !== "success") {
     return json({
@@ -59,15 +48,6 @@ export async function action(args: ActionFunctionArgs) {
 
 export default function New() {
   const formData = useActionData<typeof action>();
-
-  const [form, { title, language, code }] = useForm({
-    lastResult: formData?.submission,
-    onValidate({ formData }) {
-      return parseWithValibot(formData, {
-        schema: formSchema,
-      });
-    },
-  });
 
   return (
     <div
@@ -117,30 +97,7 @@ export default function New() {
           paddingX: "2rem",
         })}
       >
-        <Form
-          method="post"
-          {...getFormProps(form)}
-          className={css({
-            display: "flex",
-            flexDirection: "column",
-            gap: "1rem",
-          })}
-        >
-          <Input label="Title" name="title" errors={title.errors} />
-          <Select
-            name="language"
-            label="Language"
-            options={[
-              {
-                value: "javascript",
-                label: "JavaScript",
-              },
-            ]}
-            errors={language.errors}
-          />
-          <TextArea name="code" label="Code" errors={code.errors} rows={10} />
-          <Button type="submit">Create</Button>
-        </Form>
+        <SubmitSnippetForm submissionResult={formData?.submission} />
       </div>
     </div>
   );
