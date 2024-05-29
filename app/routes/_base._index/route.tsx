@@ -8,8 +8,8 @@ import { css } from "styled-system/css";
 import { getGraphqlClient } from "~/graphql-client";
 import { format } from "@formkit/tempo";
 import { Container } from "~/shared/ui/container";
-import { SnippetCompactCard } from "../../entities/snippet/ui/snippet-compact-card";
-import { generateGridStyle } from "./lib/generate-grid-style";
+import { SnippetPreviewCard } from "~/widgets/snippet-card/ui";
+import { generateGridStyle } from "~/widgets/snippet-card/lib/generate-grid-style";
 
 export const meta: MetaFunction = () => {
   return [
@@ -62,7 +62,7 @@ export default function Index() {
                 gridArea: `item${snippet.id}`,
               }}
             >
-              <SnippetCompactCard snippet={snippet} />
+              <SnippetPreviewCard snippet={snippet} />
             </div>
           ))}
         </div>

@@ -1,18 +1,16 @@
 import { css, cx } from "styled-system/css";
 import { Link } from "@remix-run/react";
 import { Snippet } from "~/entities/snippet/model";
+import {
+  getSnippetPageLinkFromSnippet,
+  getUserPageLinkFromSnippet,
+} from "../lib/link";
 
-export interface SnippetCompactCardProps {
+export interface SnippetPreviewCardProps {
   snippet: Snippet;
-  getUserPageLink: (snippet: Snippet) => string;
-  getSnippetPageLink: (snippet: Snippet) => string;
 }
 
-export function SnippetCompactCard({
-  snippet,
-  getUserPageLink,
-  getSnippetPageLink,
-}: SnippetCompactCardProps) {
+export function SnippetPreviewCard({ snippet }: SnippetPreviewCardProps) {
   return (
     <div
       className={css({
@@ -35,7 +33,7 @@ export function SnippetCompactCard({
       >
         {snippet.user.imageUrl && (
           <Link
-            to={getUserPageLink(snippet)}
+            to={getUserPageLinkFromSnippet(snippet)}
             className={css({
               width: "2.75rem",
               height: "2.75rem",
@@ -58,7 +56,7 @@ export function SnippetCompactCard({
           })}
         >
           <Link
-            to={getUserPageLink(snippet)}
+            to={getUserPageLinkFromSnippet(snippet)}
             className={css({
               fontSize: "sm",
               fontWeight: "semibold",
@@ -89,7 +87,7 @@ export function SnippetCompactCard({
           </div>
         </div>
       </div>
-      <Link to={getSnippetPageLink(snippet)}>
+      <Link to={getSnippetPageLinkFromSnippet(snippet)}>
         <h2
           className={css({
             marginY: "-0.125rem",

@@ -1,28 +1,24 @@
-import { css, cx } from "styled-system/css";
 import { Link } from "@remix-run/react";
+import { css, cx } from "styled-system/css";
 import { Snippet } from "~/entities/snippet/model";
+import { getUserPageLinkFromSnippet } from "../lib/link";
 
-export interface SnippetCompactCardProps {
+export interface SnippetCardProps {
   snippet: Snippet;
-  getUserPageLink: (snippet: Snippet) => string;
-  getSnippetPageLink: (snippet: Snippet) => string;
 }
 
-export function SnippetCompactCard({
-  snippet,
-  getUserPageLink,
-  getSnippetPageLink,
-}: SnippetCompactCardProps) {
+export function SnippetCard({ snippet }: SnippetCardProps) {
   return (
     <div
       className={css({
         display: "flex",
         flexDirection: "column",
-        padding: "1rem",
+        padding: "1.5rem",
         borderRadius: "md",
         boxShadow: "0 0 0 1px token(colors.gray.200) inset",
         gap: "1rem",
         background: "white",
+        lineHeight: 1.5,
       })}
     >
       <div
@@ -30,12 +26,12 @@ export function SnippetCompactCard({
           display: "flex",
           alignItems: "center",
           width: "100%",
-          height: "2.25rem",
+          height: "2.75rem",
         })}
       >
         {snippet.user.imageUrl && (
           <Link
-            to={getUserPageLink(snippet)}
+            to={getUserPageLinkFromSnippet(snippet)}
             className={css({
               width: "2.75rem",
               height: "2.75rem",
@@ -53,17 +49,16 @@ export function SnippetCompactCard({
           className={css({
             display: "flex",
             flexDirection: "column",
-            lineHeight: 1.375,
             overflow: "hidden",
           })}
         >
           <Link
-            to={getUserPageLink(snippet)}
+            to={getUserPageLinkFromSnippet(snippet)}
             className={css({
-              fontSize: "sm",
+              fontSize: "md",
               fontWeight: "semibold",
               color: "gray.800",
-              paddingLeft: "0.25rem",
+              paddingLeft: "0.375rem",
               overflow: "hidden",
               textOverflow: "ellipsis",
               whiteSpace: "nowrap",
@@ -77,38 +72,27 @@ export function SnippetCompactCard({
           </Link>
           <div
             className={css({
-              fontSize: "0.6875rem",
+              fontSize: "xs",
               color: "gray.600",
-              paddingLeft: "0.25rem",
+              paddingLeft: "0.375rem",
               overflow: "hidden",
               textOverflow: "ellipsis",
               whiteSpace: "nowrap",
             })}
           >
-            {snippet.postedAt}
+            Posted on {snippet.postedAt}
           </div>
         </div>
       </div>
-      <Link to={getSnippetPageLink(snippet)}>
-        <h2
-          className={css({
-            marginY: "-0.125rem",
-            fontSize: "xl",
-            fontWeight: "bold",
-            lineHeight: "1.5rem",
-            color: "gray.800",
-            overflow: "hidden",
-            textOverflow: "ellipsis",
-            whiteSpace: "nowrap",
-            cursor: "pointer",
-            _hover: {
-              opacity: 0.75,
-            },
-          })}
-        >
-          {snippet.title}
-        </h2>
-      </Link>
+      <h2
+        className={css({
+          fontSize: "3xl",
+          fontWeight: "extrabold",
+          color: "gray.800",
+        })}
+      >
+        {snippet.title}
+      </h2>
       <div
         dangerouslySetInnerHTML={{ __html: snippet.highlightedCodeHtml }}
         className={cx(
@@ -116,11 +100,10 @@ export function SnippetCompactCard({
             borderRadius: "0.5rem",
             overflow: "hidden",
             boxSizing: "border-box",
-            fontSize: "0.833rem",
-            lineHeight: "1.5rem",
+            lineHeight: 1.75,
             "& pre": {
-              paddingX: "1rem",
-              paddingY: "0.75rem",
+              paddingX: "1.25rem",
+              paddingY: "0.875rem",
             },
           })
         )}

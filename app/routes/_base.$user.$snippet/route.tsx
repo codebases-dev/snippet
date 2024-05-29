@@ -5,7 +5,7 @@ import { css } from "styled-system/css";
 import invariant from "tiny-invariant";
 import { Container } from "~/shared/ui/container";
 import { getGraphqlClient } from "~/graphql-client";
-import { SnippetCard } from "../../entities/snippet/ui/snippet-card";
+import { SnippetCard } from "~/widgets/snippet-card/ui";
 
 export const loader = async ({ params, context }: LoaderFunctionArgs) => {
   invariant(params.user, `params.user is required`);

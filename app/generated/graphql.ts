@@ -39,15 +39,15 @@ export type Mutation = {
 
 
 export type MutationCreateSnippetArgs = {
-  code?: InputMaybe<Scalars['String']['input']>;
-  language?: InputMaybe<Scalars['String']['input']>;
-  title?: InputMaybe<Scalars['String']['input']>;
-  userId?: InputMaybe<Scalars['String']['input']>;
+  code: Scalars['String']['input'];
+  language: Scalars['String']['input'];
+  title: Scalars['String']['input'];
+  userId: Scalars['String']['input'];
 };
 
 
 export type MutationDeleteSnippetArgs = {
-  id?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['String']['input'];
 };
 
 export type Query = {
@@ -60,7 +60,12 @@ export type Query = {
 
 
 export type QuerySnippetArgs = {
-  id?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['String']['input'];
+};
+
+
+export type QuerySnippetsArgs = {
+  userId?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type User = {

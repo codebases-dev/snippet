@@ -1,11 +1,13 @@
+import { Link } from "@remix-run/react";
 import { css, cx } from "styled-system/css";
 import { Snippet } from "~/entities/snippet/model";
 
 export interface SnippetCardProps {
   snippet: Snippet;
+  getUserPageLink: (snippet: Snippet) => string;
 }
 
-export function SnippetCard({ snippet }: SnippetCardProps) {
+export function SnippetCard({ snippet, getUserPageLink }: SnippetCardProps) {
   return (
     <div
       className={css({
@@ -28,9 +30,8 @@ export function SnippetCard({ snippet }: SnippetCardProps) {
         })}
       >
         {snippet.user.imageUrl && (
-          <img
-            src={snippet.user.imageUrl}
-            alt=""
+          <Link
+            to={getUserPageLink(snippet)}
             className={css({
               width: "2.75rem",
               height: "2.75rem",
@@ -38,8 +39,11 @@ export function SnippetCard({ snippet }: SnippetCardProps) {
               border: "1px solid",
               borderColor: "gray.200",
               cursor: "pointer",
+              overflow: "hidden",
             })}
-          />
+          >
+            <img src={snippet.user.imageUrl} alt="" />
+          </Link>
         )}
         <div
           className={css({
@@ -48,7 +52,8 @@ export function SnippetCard({ snippet }: SnippetCardProps) {
             overflow: "hidden",
           })}
         >
-          <div
+          <Link
+            to={getUserPageLink(snippet)}
             className={css({
               fontSize: "md",
               fontWeight: "semibold",
@@ -64,7 +69,7 @@ export function SnippetCard({ snippet }: SnippetCardProps) {
             })}
           >
             {snippet.user.displayName}
-          </div>
+          </Link>
           <div
             className={css({
               fontSize: "xs",
