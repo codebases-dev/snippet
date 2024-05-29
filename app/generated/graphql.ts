@@ -20,7 +20,7 @@ export type Scalars = {
 export type HighlightedSnippet = {
   __typename?: 'HighlightedSnippet';
   code: Scalars['String']['output'];
-  highlightedCodeHtml?: Maybe<Scalars['String']['output']>;
+  highlightedCodeHtml: Scalars['String']['output'];
   id: Scalars['String']['output'];
   language: Scalars['String']['output'];
   postedAt: Scalars['String']['output'];
@@ -76,12 +76,12 @@ export type GetSnippetQueryVariables = Exact<{
 }>;
 
 
-export type GetSnippetQuery = { __typename?: 'Query', snippet: { __typename?: 'HighlightedSnippet', code: string, highlightedCodeHtml?: string | null, id: string, language: string, postedAt: string, title: string, userId: string, user: { __typename?: 'User', displayName: string, id: string, imageUrl: string, username: string } } };
+export type GetSnippetQuery = { __typename?: 'Query', snippet: { __typename?: 'HighlightedSnippet', code: string, highlightedCodeHtml: string, id: string, language: string, postedAt: string, title: string, userId: string, user: { __typename?: 'User', displayName: string, id: string, imageUrl: string, username: string } } };
 
 export type GetSnippetsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetSnippetsQuery = { __typename?: 'Query', snippets: Array<{ __typename?: 'HighlightedSnippet', code: string, highlightedCodeHtml?: string | null, id: string, language: string, postedAt: string, title: string, userId: string, user: { __typename?: 'User', displayName: string, id: string, imageUrl: string, username: string } }> };
+export type GetSnippetsQuery = { __typename?: 'Query', snippets: Array<{ __typename?: 'HighlightedSnippet', code: string, highlightedCodeHtml: string, id: string, language: string, postedAt: string, title: string, userId: string, user: { __typename?: 'User', displayName: string, id: string, imageUrl: string, username: string } }> };
 
 export type CreateSnippetMutationVariables = Exact<{
   userId: Scalars['String']['input'];

@@ -19,7 +19,6 @@ export const loader = async ({ params, context }: LoaderFunctionArgs) => {
 
   const transformedSnippet = {
     ...snippet,
-    highlightedCodeHtml: snippet.highlightedCodeHtml ?? undefined,
     postedAt: format(new Date(snippet.postedAt), "MMM D, YYYY", "en"),
   };
 
@@ -30,10 +29,6 @@ export const loader = async ({ params, context }: LoaderFunctionArgs) => {
 
 export default function SnippetPage() {
   const { snippet } = useLoaderData<typeof loader>();
-
-  if (!snippet.highlightedCodeHtml) {
-    throw new Error("snippet.highlightedCodeHtml is required");
-  }
 
   return (
     <Container

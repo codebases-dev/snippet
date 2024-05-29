@@ -2,7 +2,7 @@ export interface Snippet {
   id: string;
   title: string;
   code: string;
-  highlightedCodeHtml?: string;
+  highlightedCodeHtml: string;
   language: string;
   postedAt: string;
   user: {

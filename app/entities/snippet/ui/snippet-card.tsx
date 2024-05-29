@@ -6,10 +6,6 @@ export interface SnippetCardProps {
 }
 
 export function SnippetCard({ snippet }: SnippetCardProps) {
-  if (!snippet.highlightedCodeHtml) {
-    throw new Error("snippet.highlightedCodeHtml is required");
-  }
-
   return (
     <div
       className={css({

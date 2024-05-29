@@ -29,7 +29,6 @@ export async function loader({ context }: LoaderFunctionArgs) {
   const transformedSnippets = snippets.map((snippet) => {
     return {
       ...snippet,
-      highlightedCodeHtml: snippet.highlightedCodeHtml ?? undefined,
       postedAt: format(new Date(snippet.postedAt), "MMM D, YYYY", "en"),
     };
   });

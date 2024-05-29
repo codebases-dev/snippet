@@ -7,10 +7,6 @@ export interface SnippetCompactCardProps {
 }
 
 export function SnippetCompactCard({ snippet }: SnippetCompactCardProps) {
-  if (!snippet.highlightedCodeHtml) {
-    throw new Error("snippet.highlightedCodeHtml is required");
-  }
-
   return (
     <div
       className={css({
