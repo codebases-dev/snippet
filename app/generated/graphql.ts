@@ -56,6 +56,8 @@ export type Query = {
   snippet: HighlightedSnippet;
   /** Get list of snippets */
   snippets: Array<HighlightedSnippet>;
+  /** Get a user by username */
+  userByUsername: User;
 };
 
 
@@ -65,7 +67,12 @@ export type QuerySnippetArgs = {
 
 
 export type QuerySnippetsArgs = {
-  userId?: InputMaybe<Scalars['String']['input']>;
+  username?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryUserByUsernameArgs = {
+  username: Scalars['String']['input'];
 };
 
 export type User = {
@@ -97,6 +104,13 @@ export type CreateSnippetMutationVariables = Exact<{
 
 
 export type CreateSnippetMutation = { __typename?: 'Mutation', createSnippet: { __typename?: 'HighlightedSnippet', code: string, id: string, language: string, postedAt: string, title: string, userId: string } };
+
+export type GetUserPageDataQueryVariables = Exact<{
+  username: Scalars['String']['input'];
+}>;
+
+
+export type GetUserPageDataQuery = { __typename?: 'Query', userByUsername: { __typename?: 'User', displayName: string, imageUrl: string, username: string }, snippets: Array<{ __typename?: 'HighlightedSnippet', code: string, highlightedCodeHtml: string, id: string, language: string, postedAt: string, title: string, userId: string, user: { __typename?: 'User', displayName: string, id: string, imageUrl: string, username: string } }> };
 
 
 export const GetSnippetDocument = gql`
@@ -149,6 +163,30 @@ export const CreateSnippetDocument = gql`
   }
 }
     `;
+export const GetUserPageDataDocument = gql`
+    query GetUserPageData($username: String!) {
+  userByUsername(username: $username) {
+    displayName
+    imageUrl
+    username
+  }
+  snippets(username: $username) {
+    code
+    highlightedCodeHtml
+    id
+    language
+    postedAt
+    title
+    userId
+    user {
+      displayName
+      id
+      imageUrl
+      username
+    }
+  }
+}
+    `;
 
 export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, string>) => Promise<T>, operationName: string, operationType?: string, variables?: any) => Promise<T>;
 
@@ -165,6 +203,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     CreateSnippet(variables: CreateSnippetMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<CreateSnippetMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<CreateSnippetMutation>(CreateSnippetDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'CreateSnippet', 'mutation', variables);
+    },
+    GetUserPageData(variables: GetUserPageDataQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetUserPageDataQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetUserPageDataQuery>(GetUserPageDataDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetUserPageData', 'query', variables);
     }
   };
 }

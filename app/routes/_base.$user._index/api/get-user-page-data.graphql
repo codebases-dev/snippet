@@ -1,0 +1,22 @@
+query GetUserPageData($username: String!) {
+  userByUsername(username: $username) {
+    displayName
+    imageUrl
+    username
+  }
+  snippets(username: $username) {
+    code
+    highlightedCodeHtml
+    id
+    language
+    postedAt
+    title
+    userId
+    user {
+      displayName
+      id
+      imageUrl
+      username
+    }
+  }
+}
