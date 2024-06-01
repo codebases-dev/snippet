@@ -29,7 +29,6 @@ export function UserProfile({ user, className }: UserProfileProps) {
           borderRadius: "full",
           border: "1px solid",
           borderColor: "gray.200",
-          cursor: "pointer",
           overflow: "hidden",
         })}
       />
