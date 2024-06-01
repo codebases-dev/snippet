@@ -15,7 +15,7 @@ export function UserProfile({ user, className }: UserProfileProps) {
           flexDirection: "column",
           alignItems: "center",
           lineHeight: 1,
-          gap: "1rem",
+          gap: "0.5rem",
         }),
         className
       )}
