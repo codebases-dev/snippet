@@ -32,7 +32,16 @@ export async function loader({ params, context }: LoaderFunctionArgs) {
     username: params.user,
   });
 
-  const transformedSnippets = snippets.map((snippet) => {
+  invariant(
+    user.__typename === "QueryUserByUsernameSuccess",
+    "Failed to load user"
+  );
+  invariant(
+    snippets.__typename === "QuerySnippetsSuccess",
+    "Failed to load snippets"
+  );
+
+  const transformedSnippets = snippets.data.map((snippet) => {
     return {
       ...snippet,
       postedAt: format(new Date(snippet.postedAt), "MMM D, YYYY", "en"),
@@ -40,7 +49,7 @@ export async function loader({ params, context }: LoaderFunctionArgs) {
   });
 
   return json({
-    user,
+    user: user.data,
     snippets: transformedSnippets,
     gridStyle: generateGridStyle(transformedSnippets, "grid-container"),
   });
