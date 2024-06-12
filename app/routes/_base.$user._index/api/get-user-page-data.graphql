@@ -1,22 +1,40 @@
 query GetUserPageData($username: String!) {
   userByUsername(username: $username) {
-    displayName
-    imageUrl
-    username
+    ... on QueryUserByUsernameSuccess {
+      __typename
+      data {
+        displayName
+        imageUrl
+        username
+      }
+    }
+    ... on Error {
+      __typename
+      message
+    }
   }
   snippets(username: $username) {
-    code
-    highlightedCodeHtml
-    id
-    language
-    postedAt
-    title
-    userId
-    user {
-      displayName
-      id
-      imageUrl
-      username
+    ... on QuerySnippetsSuccess {
+      __typename
+      data {
+        code
+        highlightedCodeHtml
+        id
+        language
+        postedAt
+        title
+        userId
+        user {
+          displayName
+          id
+          imageUrl
+          username
+        }
+      }
+    }
+    ... on Error {
+      __typename
+      message
     }
   }
 }

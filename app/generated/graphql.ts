@@ -17,6 +17,11 @@ export type Scalars = {
   Float: { input: number; output: number; }
 };
 
+export type Error = {
+  __typename?: 'Error';
+  message: Scalars['String']['output'];
+};
+
 export type HighlightedSnippet = {
   __typename?: 'HighlightedSnippet';
   code: Scalars['String']['output'];
@@ -32,9 +37,9 @@ export type HighlightedSnippet = {
 export type Mutation = {
   __typename?: 'Mutation';
   /** Create a snippet */
-  createSnippet: HighlightedSnippet;
+  createSnippet: MutationCreateSnippetResult;
   /** Delete a snippet */
-  deleteSnippet: HighlightedSnippet;
+  deleteSnippet: MutationDeleteSnippetResult;
 };
 
 
@@ -50,14 +55,28 @@ export type MutationDeleteSnippetArgs = {
   id: Scalars['String']['input'];
 };
 
+export type MutationCreateSnippetResult = Error | MutationCreateSnippetSuccess;
+
+export type MutationCreateSnippetSuccess = {
+  __typename?: 'MutationCreateSnippetSuccess';
+  data: HighlightedSnippet;
+};
+
+export type MutationDeleteSnippetResult = Error | MutationDeleteSnippetSuccess;
+
+export type MutationDeleteSnippetSuccess = {
+  __typename?: 'MutationDeleteSnippetSuccess';
+  data: HighlightedSnippet;
+};
+
 export type Query = {
   __typename?: 'Query';
   /** Get a snippet by ID */
-  snippet: HighlightedSnippet;
+  snippet: QuerySnippetResult;
   /** Get list of snippets */
-  snippets: Array<HighlightedSnippet>;
+  snippets: QuerySnippetsResult;
   /** Get a user by username */
-  userByUsername: User;
+  userByUsername: QueryUserByUsernameResult;
 };
 
 
@@ -75,6 +94,27 @@ export type QueryUserByUsernameArgs = {
   username: Scalars['String']['input'];
 };
 
+export type QuerySnippetResult = Error | QuerySnippetSuccess;
+
+export type QuerySnippetSuccess = {
+  __typename?: 'QuerySnippetSuccess';
+  data: HighlightedSnippet;
+};
+
+export type QuerySnippetsResult = Error | QuerySnippetsSuccess;
+
+export type QuerySnippetsSuccess = {
+  __typename?: 'QuerySnippetsSuccess';
+  data: Array<HighlightedSnippet>;
+};
+
+export type QueryUserByUsernameResult = Error | QueryUserByUsernameSuccess;
+
+export type QueryUserByUsernameSuccess = {
+  __typename?: 'QueryUserByUsernameSuccess';
+  data: User;
+};
+
 export type User = {
   __typename?: 'User';
   displayName: Scalars['String']['output'];
@@ -88,12 +128,12 @@ export type GetSnippetQueryVariables = Exact<{
 }>;
 
 
-export type GetSnippetQuery = { __typename?: 'Query', snippet: { __typename?: 'HighlightedSnippet', code: string, highlightedCodeHtml: string, id: string, language: string, postedAt: string, title: string, userId: string, user: { __typename?: 'User', displayName: string, id: string, imageUrl: string, username: string } } };
+export type GetSnippetQuery = { __typename?: 'Query', snippet: { __typename: 'Error', message: string } | { __typename: 'QuerySnippetSuccess', data: { __typename?: 'HighlightedSnippet', code: string, highlightedCodeHtml: string, id: string, language: string, postedAt: string, title: string, userId: string, user: { __typename?: 'User', displayName: string, id: string, imageUrl: string, username: string } } } };
 
 export type GetSnippetsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetSnippetsQuery = { __typename?: 'Query', snippets: Array<{ __typename?: 'HighlightedSnippet', code: string, highlightedCodeHtml: string, id: string, language: string, postedAt: string, title: string, userId: string, user: { __typename?: 'User', displayName: string, id: string, imageUrl: string, username: string } }> };
+export type GetSnippetsQuery = { __typename?: 'Query', snippets: { __typename: 'Error', message: string } | { __typename: 'QuerySnippetsSuccess', data: Array<{ __typename?: 'HighlightedSnippet', code: string, highlightedCodeHtml: string, id: string, language: string, postedAt: string, title: string, userId: string, user: { __typename?: 'User', displayName: string, id: string, imageUrl: string, username: string } }> } };
 
 export type CreateSnippetMutationVariables = Exact<{
   userId: Scalars['String']['input'];
@@ -103,31 +143,40 @@ export type CreateSnippetMutationVariables = Exact<{
 }>;
 
 
-export type CreateSnippetMutation = { __typename?: 'Mutation', createSnippet: { __typename?: 'HighlightedSnippet', code: string, id: string, language: string, postedAt: string, title: string, userId: string } };
+export type CreateSnippetMutation = { __typename?: 'Mutation', createSnippet: { __typename?: 'Error', message: string } | { __typename?: 'MutationCreateSnippetSuccess', data: { __typename?: 'HighlightedSnippet', code: string, id: string, language: string, postedAt: string, title: string, userId: string } } };
 
 export type GetUserPageDataQueryVariables = Exact<{
   username: Scalars['String']['input'];
 }>;
 
 
-export type GetUserPageDataQuery = { __typename?: 'Query', userByUsername: { __typename?: 'User', displayName: string, imageUrl: string, username: string }, snippets: Array<{ __typename?: 'HighlightedSnippet', code: string, highlightedCodeHtml: string, id: string, language: string, postedAt: string, title: string, userId: string, user: { __typename?: 'User', displayName: string, id: string, imageUrl: string, username: string } }> };
+export type GetUserPageDataQuery = { __typename?: 'Query', userByUsername: { __typename: 'Error', message: string } | { __typename: 'QueryUserByUsernameSuccess', data: { __typename?: 'User', displayName: string, imageUrl: string, username: string } }, snippets: { __typename: 'Error', message: string } | { __typename: 'QuerySnippetsSuccess', data: Array<{ __typename?: 'HighlightedSnippet', code: string, highlightedCodeHtml: string, id: string, language: string, postedAt: string, title: string, userId: string, user: { __typename?: 'User', displayName: string, id: string, imageUrl: string, username: string } }> } };
 
 
 export const GetSnippetDocument = gql`
     query GetSnippet($id: String!) {
   snippet(id: $id) {
-    code
-    highlightedCodeHtml
-    id
-    language
-    postedAt
-    title
-    userId
-    user {
-      displayName
-      id
-      imageUrl
-      username
+    ... on QuerySnippetSuccess {
+      __typename
+      data {
+        code
+        highlightedCodeHtml
+        id
+        language
+        postedAt
+        title
+        userId
+        user {
+          displayName
+          id
+          imageUrl
+          username
+        }
+      }
+    }
+    ... on Error {
+      __typename
+      message
     }
   }
 }
@@ -135,18 +184,27 @@ export const GetSnippetDocument = gql`
 export const GetSnippetsDocument = gql`
     query GetSnippets {
   snippets {
-    code
-    highlightedCodeHtml
-    id
-    language
-    postedAt
-    title
-    userId
-    user {
-      displayName
-      id
-      imageUrl
-      username
+    ... on QuerySnippetsSuccess {
+      __typename
+      data {
+        code
+        highlightedCodeHtml
+        id
+        language
+        postedAt
+        title
+        userId
+        user {
+          displayName
+          id
+          imageUrl
+          username
+        }
+      }
+    }
+    ... on Error {
+      __typename
+      message
     }
   }
 }
@@ -154,35 +212,60 @@ export const GetSnippetsDocument = gql`
 export const CreateSnippetDocument = gql`
     mutation CreateSnippet($userId: String!, $title: String!, $code: String!, $language: String!) {
   createSnippet(userId: $userId, title: $title, code: $code, language: $language) {
-    code
-    id
-    language
-    postedAt
-    title
-    userId
+    ... on MutationCreateSnippetSuccess {
+      data {
+        code
+        id
+        language
+        postedAt
+        title
+        userId
+      }
+    }
+    ... on Error {
+      message
+    }
   }
 }
     `;
 export const GetUserPageDataDocument = gql`
     query GetUserPageData($username: String!) {
   userByUsername(username: $username) {
-    displayName
-    imageUrl
-    username
+    ... on QueryUserByUsernameSuccess {
+      __typename
+      data {
+        displayName
+        imageUrl
+        username
+      }
+    }
+    ... on Error {
+      __typename
+      message
+    }
   }
   snippets(username: $username) {
-    code
-    highlightedCodeHtml
-    id
-    language
-    postedAt
-    title
-    userId
-    user {
-      displayName
-      id
-      imageUrl
-      username
+    ... on QuerySnippetsSuccess {
+      __typename
+      data {
+        code
+        highlightedCodeHtml
+        id
+        language
+        postedAt
+        title
+        userId
+        user {
+          displayName
+          id
+          imageUrl
+          username
+        }
+      }
+    }
+    ... on Error {
+      __typename
+      message
     }
   }
 }

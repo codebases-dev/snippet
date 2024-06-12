@@ -1,9 +1,12 @@
 import type { CodegenConfig } from "@graphql-codegen/cli";
 
+if (!process.env.GRAPHQL_SCHEMA_PATH) {
+  throw new Error("`GRAPHQL_SCHEMA_PATH` is not set");
+}
+
 const config: CodegenConfig = {
   overwrite: true,
-  schema:
-    "https://raw.githubusercontent.com/codebases-dev/api/main/graphql/schema.graphql",
+  schema: process.env.GRAPHQL_SCHEMA_PATH,
   documents: "app/**/*.graphql",
   generates: {
     "app/generated/graphql.ts": {

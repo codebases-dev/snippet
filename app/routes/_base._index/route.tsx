@@ -10,6 +10,7 @@ import { format } from "@formkit/tempo";
 import { Container } from "~/shared/ui/container";
 import { SnippetPreviewCard } from "~/widgets/snippet-card/ui";
 import { generateGridStyle } from "~/widgets/snippet-card/lib/generate-grid-style";
+import invariant from "tiny-invariant";
 
 export const meta: MetaFunction = () => {
   return [
@@ -26,7 +27,12 @@ export async function loader({ context }: LoaderFunctionArgs) {
 
   const { snippets } = await client.GetSnippets();
 
-  const transformedSnippets = snippets.map((snippet) => {
+  invariant(
+    snippets.__typename === "QuerySnippetsSuccess",
+    "Failed to load snippets"
+  );
+
+  const transformedSnippets = snippets.data.map((snippet) => {
     return {
       ...snippet,
       postedAt: format(new Date(snippet.postedAt), "MMM D, YYYY", "en"),

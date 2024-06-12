@@ -17,9 +17,14 @@ export const loader = async ({ params, context }: LoaderFunctionArgs) => {
     id: params.snippet,
   });
 
+  invariant(
+    snippet.__typename === "QuerySnippetSuccess",
+    "Failed to load snippet"
+  );
+
   const transformedSnippet = {
-    ...snippet,
-    postedAt: format(new Date(snippet.postedAt), "MMM D, YYYY", "en"),
+    ...snippet.data,
+    postedAt: format(new Date(snippet.data.postedAt), "MMM D, YYYY", "en"),
   };
 
   return json({

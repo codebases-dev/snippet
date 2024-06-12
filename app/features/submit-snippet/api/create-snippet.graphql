@@ -10,11 +10,18 @@ mutation CreateSnippet(
     code: $code
     language: $language
   ) {
-    code
-    id
-    language
-    postedAt
-    title
-    userId
+    ... on MutationCreateSnippetSuccess {
+      data {
+        code
+        id
+        language
+        postedAt
+        title
+        userId
+      }
+    }
+    ... on Error {
+      message
+    }
   }
 }
