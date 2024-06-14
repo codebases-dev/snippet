@@ -4,10 +4,8 @@ export default defineConfig({
   // Whether to use css reset
   preflight: true,
 
-  // The extension for the emitted JavaScript files
-  outExtension: "js",
   // Where to look for your css declarations
-  include: ["./app/**/*.{ts,tsx,js,jsx}"],
+  include: ["./app/**/*.{js,jsx,ts,tsx}"],
 
   // Files to exclude
   exclude: [],

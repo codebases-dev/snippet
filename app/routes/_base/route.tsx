@@ -1,13 +1,13 @@
 import { Link, Outlet } from "@remix-run/react";
 import { css } from "styled-system/css";
-/* import {
+import {
   SignedIn,
   SignedOut,
   SignInButton,
   SignUpButton,
   UserButton,
 } from "@clerk/remix";
-import { Button } from "~/shared/ui/button"; */
+import { Button } from "~/shared/ui/button";
 
 function Header() {
   return (
@@ -44,7 +44,7 @@ function Header() {
           </span>
         </Link>
       </div>
-      {/* <div
+      <div
         className={css({
           display: "flex",
           alignItems: "center",
@@ -80,7 +80,7 @@ function Header() {
             </SignUpButton>
           </div>
         </SignedOut>
-      </div> */}
+      </div>
     </header>
   );
 }

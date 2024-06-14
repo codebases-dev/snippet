@@ -1,5 +1,4 @@
-import { LinksFunction, LoaderFunction } from "@remix-run/cloudflare";
-import { cssBundleHref } from "@remix-run/css-bundle";
+import type { LinksFunction, LoaderFunction } from "@remix-run/cloudflare";
 import {
   Links,
   Meta,
@@ -12,10 +11,7 @@ import { ClerkApp } from "@clerk/remix";
 
 import styles from "./index.css?url";
 
-export const links: LinksFunction = () => [
-  ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
-  { rel: "stylesheet", href: styles },
-];
+export const links: LinksFunction = () => [{ rel: "stylesheet", href: styles }];
 
 export const loader: LoaderFunction = (args) => rootAuthLoader(args);
 
